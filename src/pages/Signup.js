@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import logo from "../logo.png";
-import M from "materialize-css";
 
 class Signup extends Component {
   constructor(props) {
@@ -50,7 +49,7 @@ class Signup extends Component {
               <img src={logo} className="responsive-img logo" alt="logo" />
               <p className="light-blue-text text-accent-4 flow-text">
                 Crear una cuenta. Empieza a dar a conocer tus Habilidades y
-                ofrece tus servicios
+                ofrece tus servicios.
               </p>
               <p className="flow-text">
                 ¿Ya tienes cuenta? <a href="#login">Inicia sesión</a>

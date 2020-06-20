@@ -1,0 +1,166 @@
+[
+  {
+    "id": 1,
+    "first_name": "Hartley",
+    "last_name": "Kernermann",
+    "photo": "http://dummyimage.com/109x193.bmp/cc0000/ffffff",
+    "services": ["Web Developer I"]
+  },
+  {
+    "id": 2,
+    "first_name": "Berkly",
+    "last_name": "Dickey",
+    "photo": "http://dummyimage.com/175x167.png/ff4444/ffffff",
+    "services": ["Marketing Manager"]
+  },
+  {
+    "id": 3,
+    "first_name": "Antoine",
+    "last_name": "Cumbes",
+    "photo": "http://dummyimage.com/112x124.png/dddddd/000000",
+    "services": [
+      "Office Assistant I",
+      "Research Associate",
+      "Desktop Support Technician",
+      "Graphic Designer",
+      "Project Manager"
+    ]
+  },
+  {
+    "id": 4,
+    "first_name": "Brennan",
+    "last_name": "Geraud",
+    "photo": "http://dummyimage.com/119x173.png/cc0000/ffffff",
+    "services": ["Civil Engineer"]
+  },
+  {
+    "id": 5,
+    "first_name": "Beltran",
+    "last_name": "Belsham",
+    "photo": "http://dummyimage.com/177x123.png/dddddd/000000",
+    "services": ["Systems Administrator IV"]
+  },
+  {
+    "id": 13,
+    "first_name": "Luciano",
+    "last_name": "Bartholat",
+    "photo": "http://dummyimage.com/112x171.bmp/5fa2dd/ffffff",
+    "services": ["Human Resources Assistant IV"]
+  },
+  {
+    "id": 33,
+    "first_name": "Timmi",
+    "last_name": "Loffel",
+    "photo": "http://dummyimage.com/145x151.jpg/5fa2dd/ffffff",
+    "services": [
+      "Recruiting Manager",
+      "Speech Pathologist",
+      "Automation Specialist II",
+      "Editor",
+      "Technical Writer"
+    ]
+  },
+  {
+    "id": 34,
+    "first_name": "Kelcey",
+    "last_name": "Gobert",
+    "photo": "http://dummyimage.com/149x199.jpg/cc0000/ffffff",
+    "services": ["Analyst Programmer"]
+  },
+  {
+    "id": 35,
+    "first_name": "Cheri",
+    "last_name": "Punchard",
+    "photo": "http://dummyimage.com/195x144.jpg/ff4444/ffffff",
+    "services": ["Cost Accountant", "Director of Sales"]
+  },
+  {
+    "id": 36,
+    "first_name": "Emelen",
+    "last_name": "Brager",
+    "photo": "http://dummyimage.com/149x141.jpg/5fa2dd/ffffff",
+    "services": [
+      "Graphic Designer",
+      "Senior Cost Accountant",
+      "Biostatistician IV",
+      "Automation Specialist IV",
+      "VP Sales"
+    ]
+  },
+  {
+    "id": 37,
+    "first_name": "Katha",
+    "last_name": "Auten",
+    "photo": "http://dummyimage.com/111x138.jpg/dddddd/000000",
+    "services": ["VP Quality Control"]
+  },
+  {
+    "id": 38,
+    "first_name": "Annemarie",
+    "last_name": "Rolingson",
+    "photo": "http://dummyimage.com/197x159.png/ff4444/ffffff",
+    "services": [
+      "Recruiter",
+      "Nurse",
+      "Food Chemist",
+      "Programmer Analyst III",
+      "Web Developer II"
+    ]
+  },
+  {
+    "id": 96,
+    "first_name": "Onfroi",
+    "last_name": "Moncur",
+    "photo": "http://dummyimage.com/147x113.png/ff4444/ffffff",
+    "services": [
+      "Computer Systems Analyst IV",
+      "Product Engineer",
+      "Account Representative I",
+      "Dental Hygienist"
+    ]
+  },
+  {
+    "id": 97,
+    "first_name": "Lizzie",
+    "last_name": "Alessandretti",
+    "photo": "http://dummyimage.com/115x150.jpg/ff4444/ffffff",
+    "services": ["Administrative Assistant IV", "Teacher", "Editor"]
+  },
+  {
+    "id": 98,
+    "first_name": "Davy",
+    "last_name": "Barme",
+    "photo": "http://dummyimage.com/110x136.png/dddddd/000000",
+    "services": [
+      "Analyst Programmer",
+      "Information Systems Manager",
+      "Chief Design Engineer",
+      "Professor"
+    ]
+  },
+  {
+    "id": 99,
+    "first_name": "Leland",
+    "last_name": "Lefley",
+    "photo": "http://dummyimage.com/134x107.bmp/cc0000/ffffff",
+    "services": [
+      "Sales Representative",
+      "Legal Assistant",
+      "Research Assistant I",
+      "Professor"
+    ]
+  },
+  {
+    "id": 100,
+    "first_name": "Willdon",
+    "last_name": "Gergher",
+    "photo": "http://dummyimage.com/177x132.jpg/dddddd/000000",
+    "services": [
+      "Senior Editor",
+      "Mechanical Systems Engineer",
+      "Software Engineer I",
+      "Professor",
+      "Staff Scientist"
+    ]
+  }
+]
