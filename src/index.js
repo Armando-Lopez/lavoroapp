@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import App from "./App";
 import "materialize-css/dist/css/materialize.css";
+import "materialize-css/";
+import "./scss/main.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <>
-      <h1>Project under construction</h1>
-      <p>lorem</p>
-    </>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
