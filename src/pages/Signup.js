@@ -1,108 +1,132 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import logo from "../logo.png";
+import Worker from "../services/workerServices";
+import M from "materialize-css";
 
-class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: "",
-      lastName: "",
-      birthday: "",
-      email: "",
-      password1: "",
-      password2: "",
-      page1: true,
-    };
-    this._handleChange = this._handleChange.bind(this);
-    this._handleNextPage = this._handleNextPage.bind(this);
-    this._handleSubmit = this._handleSubmit.bind(this);
-  }
+const Signup = () => {
+  const [worker, fillWorker] = useState({
+    role: "worker",
+    first_name: "",
+    last_name: "",
+    birthday: "",
+    email: "",
+    password: "",
+  });
+  const [passwords, setPasswords] = useState({ password1: "", password2: "" });
+  const [page, changePage] = useState(1);
 
-  _handleChange(e) {
-    this.setState({
-      [e.target.id]: e.target.value.trim(),
-    });
-  }
-
-  _handleNextPage(e) {
-    e.preventDefault();
-    const { firstName, lastName, birthday } = this.state;
-    if (firstName === "" || lastName === "" || birthday === "") {
+  const _handleChange = (e) => {
+    if (e.target.id === "password1" || e.target.id === "password2") {
+      setPasswords({
+        ...passwords,
+        [e.target.id]: e.target.value.trim(),
+      });
     } else {
-      this.setState({ page1: false });
+      fillWorker({
+        ...worker,
+        [e.target.id]: e.target.value.trim(),
+      });
     }
-    console.log(this.state);
-  }
+  };
 
-  _handleSubmit(e) {
+  const _handleNextPage = (e) => {
     e.preventDefault();
-    console.log(this.state);
-  }
+    const { first_name, last_name, birthday } = worker;
+    let minlength = 3;
+    if (
+      first_name.length <= minlength ||
+      last_name.length <= minlength ||
+      birthday === ""
+    ) {
+      M.toast({ html: "Hay datos no validos" });
+    } else {
+      changePage(2);
+    }
+  };
 
-  render() {
-    return (
-      <section className="section signup-section">
-        <div className="bg"></div>
-        <div className="row container content">
-          <div className="col s12 center-align">
-            <div className="text">
-              <img src={logo} className="responsive-img logo" alt="logo" />
-              <p className="light-blue-text text-accent-4 flow-text">
-                Crear una cuenta. Empieza a dar a conocer tus Habilidades y
-                ofrece tus servicios.
-              </p>
-              <p className="flow-text">
-                ¿Ya tienes cuenta? <a href="#login">Inicia sesión</a>
-              </p>
-            </div>
-            <div className="row">
-              <form className="col s12">
-                <div className="card-panel">
-                  {this.state.page1 ? (
-                    <FormPart1
-                      handleChange={this._handleChange}
-                      handleNextPage={this._handleNextPage}
-                    />
-                  ) : (
-                    <FormPart2
-                      handleChange={this._handleChange}
-                      handleSubmit={this._handleSubmit}
-                    />
-                  )}
-                </div>
-              </form>
-            </div>
+  const _handleSubmit = (e) => {
+    e.preventDefault();
+    const { password1, password2 } = passwords;
+    if (worker.email === "") {
+      M.toast({ html: "Email vacio" });
+    } else if (password1 !== password2) {
+      M.toast({ html: "Las contraseñas no coinciden" });
+    } else {
+      fillWorker({
+        ...worker,
+        password: password1,
+      });
+
+      if (worker.password !== "") {
+        Worker.create(worker);
+      }
+    }
+  };
+
+  return (
+    <section className="section signup-section">
+      <div className="bg"></div>
+      <div className="row container content">
+        <div className="col s12 center-align">
+          <div className="text">
+            <img src={logo} className="responsive-img logo" alt="logo" />
+            <p className="light-blue-text text-accent-4 flow-text">
+              Crear una cuenta. Empieza a dar a conocer tus Habilidades y ofrece
+              tus servicios.
+            </p>
+            <p className="flow-text">
+              ¿Ya tienes cuenta? <a href="#login">Inicia sesión</a>
+            </p>
+          </div>
+          <div className="row">
+            <form className="col s12">
+              <div className="card-panel">
+                {page === 1 ? (
+                  <FormPart1
+                    handleChange={_handleChange}
+                    handleNextPage={_handleNextPage}
+                  />
+                ) : (
+                  <FormPart2
+                    handleChange={_handleChange}
+                    handleSubmit={_handleSubmit}
+                  />
+                )}
+              </div>
+            </form>
           </div>
         </div>
-      </section>
-    );
-  }
-}
+      </div>
+    </section>
+  );
+};
 
 const FormPart1 = ({ handleChange, handleNextPage }) => (
   <>
     <div className="input-field">
       <input
-        id="firstName"
+        id="first_name"
         type="text"
         className="validate"
         placeholder="Nombres"
         required
         onKeyUp={handleChange}
+        autoComplete="off"
       />
-      <label htmlFor="firstName">¿Cuál es tu nombre?</label>
+      <label htmlFor="first_name">¿Cuál es tu nombre?</label>
     </div>
 
     <div className="input-field">
       <input
-        id="lastName"
+        id="last_name"
         type="text"
         className="validate"
         placeholder="Apellidos"
         required
         onKeyUp={handleChange}
+        autoComplete="off"
       />
-      <label htmlFor="lastName">¿Cuál es tu apellido?</label>
+      <label htmlFor="last_name">¿Cuál es tu apellido?</label>
     </div>
 
     <div className="input-field">
@@ -117,7 +141,6 @@ const FormPart1 = ({ handleChange, handleNextPage }) => (
     </div>
 
     <button
-      type="submit"
       className="btn light-blue darken-3 waves-effect waves-light"
       onClick={handleNextPage}
     >

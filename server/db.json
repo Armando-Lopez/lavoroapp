@@ -1,0 +1,44 @@
+{
+  "workers": [
+    {
+      "id": 100,
+      "role": "worker",
+      "first_name": "Willdon",
+      "last_name": "Gergher",
+      "photo": "http://dummyimage.com/177x132.jpg/dddddd/000000",
+      "services": [
+        "Senior Editor",
+        "Mechanical Systems Engineer",
+        "Software Engineer I",
+        "Professor",
+        "Staff Scientist"
+      ]
+    },
+    {
+      "role": "worker",
+      "first_name": "Diego",
+      "last_name": "López",
+      "photo": "http://dummyimage.com/109x193.bmp/cc0000/ffffff",
+      "services": [
+        "Web Developer I"
+      ],
+      "id": 101
+    },
+    {
+      "role": "worker",
+      "first_name": "Diego",
+      "last_name": "Lopez",
+      "birthday": "2020-06-11",
+      "email": "lopexdiego5@gmail.com",
+      "password": "123",
+      "id": 102
+    }
+  ],
+  "users": [],
+  "categories": [
+    "Belleza",
+    "Carpinteria",
+    "Construcción",
+    "Mudanzas"
+  ]
+}

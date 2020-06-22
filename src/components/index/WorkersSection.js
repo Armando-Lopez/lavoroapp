@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import Worker from "../../services/workerServices";
 import WorkerCard from "./WorkerCard";
 import Loader from "../Loader";
 
@@ -7,14 +7,15 @@ const WorkersSection = () => {
   const [WorkersList, FillWorkersList] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  const GetWorkers = async () => {
-    try {
-      const response = await axios.get("./utils/MOCK_WORKERS_LIST.json");
-      FillWorkersList(response.data);
-      setLoaded(true);
-    } catch (error) {
-      console.log(error);
-    }
+  const GetWorkers = () => {
+    Worker.getAll()
+      .then((workers) => {
+        FillWorkersList(workers);
+        setLoaded(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
