@@ -1,7 +1,7 @@
 import React from "react";
 
 const Loader = () => (
-  <div className="preloader-wrapper big active" style={{ marginTop: "30%" }}>
+  <div className="preloader-wrapper big active" style={{ marginTop: "10%" }}>
     <div className="spinner-layer spinner-blue-only">
       <div className="circle-clipper left">
         <div className="circle"></div>

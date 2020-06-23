@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Worker from "../../services/workerServices";
+import WorkerCRUD from "../../services/workerCRUD";
 import WorkerCard from "./WorkerCard";
 import Loader from "../Loader";
 
@@ -8,7 +8,7 @@ const WorkersSection = () => {
   const [loaded, setLoaded] = useState(false);
 
   const GetWorkers = () => {
-    Worker.getAll()
+    WorkerCRUD.getAll()
       .then((workers) => {
         FillWorkersList(workers);
         setLoaded(true);

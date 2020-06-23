@@ -15,26 +15,18 @@
       ]
     },
     {
-      "role": "worker",
       "first_name": "Diego",
       "last_name": "López",
-      "photo": "http://dummyimage.com/109x193.bmp/cc0000/ffffff",
-      "services": [
-        "Web Developer I"
-      ],
-      "id": 101
-    },
-    {
-      "role": "worker",
-      "first_name": "Diego",
-      "last_name": "Lopez",
-      "birthday": "2020-06-11",
+      "birthday": "1999-08-31",
       "email": "lopexdiego5@gmail.com",
-      "password": "123",
-      "id": 102
+      "password": "12345",
+      "role": "worker",
+      "services": [],
+      "photo": "",
+      "id": 101
     }
   ],
-  "users": [],
+  "customers": [],
   "categories": [
     "Belleza",
     "Carpinteria",
