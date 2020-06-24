@@ -1,30 +1,39 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
 import WorkerCard from "./WorkerCard";
 import Loader from "../Loader";
+import db from "../../services/firebase/dbconfig";
 
 const WorkersSection = () => {
-  const [WorkersList, FillWorkersList] = useState([]);
+  const [workers, setWorkers] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  const GetWorkers = async () => {
-    try {
-      const response = await axios.get("./utils/MOCK_WORKERS_LIST.json");
-      FillWorkersList(response.data);
+  const GetWorkers = () => {
+    const worker = [];
+    db.collection("workers").onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        worker.push({
+          id: doc.id,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          photo: data.photo,
+          services: data.services,
+        });
+        setWorkers(worker);
+      });
       setLoaded(true);
-    } catch (error) {
-      console.log(error);
-    }
+    });
   };
 
   useEffect(() => {
     GetWorkers();
   }, []);
 
-  if (WorkersList && loaded) {
+  if (workers && loaded) {
     return (
       <ul className="collection workers-list">
-        {WorkersList.map((worker, index) => {
+        {workers.map((worker, index) => {
           return (
             <WorkerCard
               key={index}

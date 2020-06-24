@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import WorkerProfile from "./pages/WorkerProfile";
 
 const App = () => {
   return (
@@ -16,8 +16,8 @@ const App = () => {
           <Signup />
         </Route>
 
-        <Route excact path="/login">
-          <Login />
+        <Route exact path="/profile/:token">
+          <WorkerProfile />
         </Route>
       </Switch>
     </Router>

@@ -1,0 +1,36 @@
+{
+  "workers": [
+    {
+      "id": 100,
+      "role": "worker",
+      "first_name": "Willdon",
+      "last_name": "Gergher",
+      "photo": "http://dummyimage.com/177x132.jpg/dddddd/000000",
+      "services": [
+        "Senior Editor",
+        "Mechanical Systems Engineer",
+        "Software Engineer I",
+        "Professor",
+        "Staff Scientist"
+      ]
+    },
+    {
+      "first_name": "Diego",
+      "last_name": "López",
+      "birthday": "1999-08-31",
+      "email": "lopexdiego5@gmail.com",
+      "password": "12345",
+      "role": "worker",
+      "services": [],
+      "photo": "",
+      "id": 101
+    }
+  ],
+  "customers": [],
+  "categories": [
+    "Belleza",
+    "Carpinteria",
+    "Construcción",
+    "Mudanzas"
+  ]
+}

@@ -5,6 +5,8 @@ import "materialize-css/dist/css/materialize.css";
 import "materialize-css/";
 import "./scss/main.css";
 
+import "./services/firebase/firebaseconfig";
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
