@@ -1,7 +1,12 @@
 import React from "react";
 import logo from "../logo.png";
+import { Redirect } from "react-router-dom";
+import Session from "../services/localStorageService";
 
 const Login = () => {
+  if (Session.getCurrent()) {
+    return <Redirect to="/" />;
+  }
   return (
     <section className="center-align">
       <div className="bg blue"></div>
