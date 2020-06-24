@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import logo from "../logo.png";
-import WorkerCRUD from "../services/workerCRUD";
+import db from "../services/firebase/dbconfig";
+import Session from "../services/localStorageService";
+import { Redirect } from "react-router-dom";
 
 const Intro = () => (
   <div className="text">
@@ -31,6 +33,7 @@ const SignupForm = () => {
       role: "worker",
       first_name: data.first_name,
       last_name: data.last_name,
+      description: "",
       birthday: data.birthday,
       email: data.email,
       password: data.password,
@@ -38,7 +41,15 @@ const SignupForm = () => {
     });
 
     if (data) {
-      WorkerCRUD.create(data);
+      db.collection("workers")
+        .add(data)
+        .then(function (docRef) {
+          // console.log("Document written with ID: ", docRef.id);
+          Session.create(docRef.id);
+        })
+        .catch(function (error) {
+          console.error("Error adding document: ", error);
+        });
     }
   };
 
@@ -147,18 +158,22 @@ const SignupForm = () => {
   );
 };
 
-const WorkerSignupSection = () => (
-  <section className="section signup-section">
-    <div className="bg"></div>
-    <div className="row container content">
-      <div className="col s12 center-align">
-        <Intro />
-        <div className="row">
-          <SignupForm />
+const WorkerSignupSection = () => {
+  if (Session.getCurrent()) {
+    return <Redirect to="/" />;
+  }
+  return (
+    <section className="section signup-section">
+      <div className="bg"></div>
+      <div className="row container content">
+        <div className="col s12 center-align">
+          <Intro />
+          <div className="row">
+            <SignupForm />
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
-
+    </section>
+  );
+};
 export default WorkerSignupSection;
