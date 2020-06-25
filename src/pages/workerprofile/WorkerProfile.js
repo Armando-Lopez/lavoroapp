@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import db from "../services/firebase/dbconfig";
-import Loader from "../components/Loader";
+import db from "../../services/firebase/dbconfig";
+import Loader from "../../components/Loader";
 import M from "materialize-css";
 
 const WorkerProfile = () => {
-  const { token } = useParams();
+  const { uid } = useParams();
   const [worker, setWorker] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [found, setFound] = useState(true);
@@ -16,7 +16,7 @@ const WorkerProfile = () => {
 
   const getWorker = () => {
     db.collection("workers")
-      .doc(token)
+      .doc(uid)
       .get()
       .then(function (doc) {
         if (doc.exists) {
@@ -45,7 +45,7 @@ const WorkerProfile = () => {
 
           <div className="row info">
             <div className="col s1">
-              <EditInfo worker={worker} id={token} />
+              <EditInfo worker={worker} id={uid} />
             </div>
             <div className="col s11">
               <h3 className="name">

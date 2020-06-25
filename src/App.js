@@ -1,17 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
 
-import WorkerProfile from "./pages/WorkerProfile";
+//pages
+import Home from "./pages/home/Home";
+import Signup from "./pages/signup/Signup";
+import Login from "./pages/login/Login";
+import WorkerProfile from "./pages/workerprofile/WorkerProfile";
 
 const App = () => {
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <Index />
+          <Home />
         </Route>
 
         <Route exact path="/registro">
@@ -22,7 +23,7 @@ const App = () => {
           <Login />
         </Route>
 
-        <Route exact path="/profile/:token">
+        <Route exact path="/profile/:uid">
           <WorkerProfile />
         </Route>
       </Switch>

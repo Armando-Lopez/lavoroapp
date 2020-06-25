@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import WorkerCard from "./WorkerCard";
-import Loader from "../Loader";
-import db from "../../services/firebase/dbconfig";
+import Loader from "../../../components/Loader";
+import db from "../../../services/firebase/dbconfig";
 
 const WorkersSection = () => {
   const [workers, setWorkers] = useState([]);
