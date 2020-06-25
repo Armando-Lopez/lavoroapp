@@ -1,12 +1,10 @@
 import React from "react";
-import logo from "../logo.png";
-import { Redirect } from "react-router-dom";
-import Session from "../services/localStorageService";
+import logo from "../../logo.png";
+import { Link } from "react-router-dom";
+//css
+import "./css/login.css";
 
 const Login = () => {
-  if (Session.getCurrent()) {
-    return <Redirect to="/" />;
-  }
   return (
     <section className="center-align">
       <div className="bg blue"></div>
@@ -35,7 +33,7 @@ const Login = () => {
                 Ingresar
               </button>
               <p>
-                ¿No tienes cuenta? <a href="/registro">Crea una cuenta</a>
+                ¿No tienes cuenta? <Link to="/registro">Crea una cuenta</Link>
               </p>
             </div>
           </form>

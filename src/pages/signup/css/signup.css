@@ -1,7 +1,3 @@
-.border {
-  border: 2px solid black;
-}
-
 /* SIGNUP*/
 .signup-section {
   position: relative;
@@ -36,30 +32,3 @@
   border-radius: 10px;
   border: 2px solid #03a9f4;
 }
-
-/* END SIGNUP*/
-section {
-  height: 100vh;
-  position: relative;
-}
-
-section .bg {
-  position: absolute;
-  height: 50%;
-  width: 100%;
-}
-
-section .content {
-  position: absolute;
-}
-
-section .form-login {
-  border-radius: 20px;
-  border: 2px solid #03a9f4;
-}
-
-section .form-login .divider {
-  height: 3px;
-  margin-bottom: 2em;
-}
-/*# sourceMappingURL=main.css.map */

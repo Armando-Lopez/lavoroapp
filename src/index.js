@@ -1,11 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+//firebase config
+import "./services/firebase/dbconfig";
+
+//components
 import App from "./App";
+
+//styles
 import "materialize-css/dist/css/materialize.css";
 import "materialize-css/";
-import "./scss/main.css";
-
-import "./services/firebase/firebaseconfig";
 
 ReactDOM.render(
   <React.StrictMode>
