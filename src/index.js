@@ -8,8 +8,7 @@ import "./services/firebase/dbconfig";
 import App from "./App";
 
 //styles
-import "materialize-css/dist/css/materialize.css";
-import "materialize-css/";
+import "materialize-css/dist/css/materialize.min.css";
 
 ReactDOM.render(
   <React.StrictMode>

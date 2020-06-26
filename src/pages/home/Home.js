@@ -6,7 +6,7 @@ import WorkersSection from "./components/WorkersSection";
 
 const Index = () => {
   return (
-    <section className="">
+    <section>
       <Navbar />
       <SideMenu />
       <WorkersSection />
