@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from "react";
 import db from "../../../services/firebase/dbconfig";
+import firebase from "firebase";
 import M from "materialize-css";
 
 const BasicInfo = ({ uid, worker }) => {
   //
 
-  useEffect(() => {
-    var elems = document.querySelectorAll(".modal");
-    M.Modal.init(elems);
-  });
+  const [IsOwner, setOwner] = useState(false);
+
+  //verifica si el visitante es el dueño
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (user.uid === uid) {
+          setOwner(true);
+        }
+      }
+    });
+  }, []);
 
   return (
     <div className="row">
       <div className="col s12 basic-info">
-        <button
-          data-target="modal-form-info"
-          className="btn-floating modal-trigger btn-edit-info"
-        >
-          <i className="material-icons">edit</i>
-        </button>
-
         <div>
           <h4 className="name">{worker.first_name + " " + worker.last_name}</h4>
 
@@ -34,15 +36,24 @@ const BasicInfo = ({ uid, worker }) => {
           </p>
         </div>
 
-        <ModalEditInfo uid={uid} worker={worker} />
+        {IsOwner && (
+          <>
+            <button
+              data-target="modal-form-info"
+              className="btn-floating blue modal-trigger btn-edit-info"
+            >
+              <i className="material-icons">edit</i>
+            </button>
+
+            <ModalEditInfo uid={uid} worker={worker} />
+          </>
+        )}
 
         <div className="divider"></div>
       </div>
     </div>
   );
 };
-
-export default BasicInfo;
 
 //editart
 const ModalEditInfo = ({ uid, worker }) => {
@@ -51,21 +62,19 @@ const ModalEditInfo = ({ uid, worker }) => {
   const [description, setDescription] = useState(worker.description);
 
   useEffect(() => {
-    // const elems = document.querySelectorAll(".modal-form-info");
-    // M.Modal.init(elems, { dismissible: true });
+    const elems = document.querySelectorAll(".modal");
+    M.Modal.init(elems);
   }, []);
 
   const handleInputServices = (ev) => {
-    const servicesList = ev.target.value
-      .trim()
-      .split(",")
-      .filter((service) => service.trim() !== "");
-    setServices(servicesList);
+    const servicesList = ev.target.value //obtiene las habilidades del formulario
+      .trim() //recorta espacios
+      .split(",") //converte el texto en un array, separa al encontar comas
+      .filter((service) => service.trim() !== ""); //no evita los espacio en blanco
+    setServices(servicesList); //añade el array al estado
   };
 
-  const handleInputDescription = (e) => {
-    setDescription(e.target.value.trim());
-  };
+  const handleInputDescription = (e) => setDescription(e.target.value.trim());
 
   const save = async () => {
     try {
@@ -86,7 +95,7 @@ const ModalEditInfo = ({ uid, worker }) => {
     <div id="modal-form-info" className="modal">
       <div className="modal-content">
         <div className="row">
-          <h6>Edita tu información básica</h6>
+          <h5>Edita tu información básica</h5>
           <div className="input-field col s12 left-align">
             <span>Aún no puedes editar tu nombre</span>
             <input
@@ -106,7 +115,7 @@ const ModalEditInfo = ({ uid, worker }) => {
               name="services"
               id="services"
               className="materialize-textarea"
-              defaultValue={services.map((service) => `${service}, `)}
+              defaultValue={services.map((service) => `${service}`)}
               onChange={handleInputServices}
             ></textarea>
 
@@ -139,3 +148,5 @@ const ModalEditInfo = ({ uid, worker }) => {
     </div>
   );
 };
+
+export default BasicInfo;

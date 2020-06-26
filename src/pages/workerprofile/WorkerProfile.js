@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import db from "../../services/firebase/dbconfig";
 import Loader from "../../components/Loader";
-import M from "materialize-css";
 
 //components
 import ProfilePhoto from "./components/ProfilePhoto";
@@ -42,18 +41,22 @@ const WorkerProfile = () => {
 
   if (worker && loaded && found) {
     return (
-      <section className="">
+      <section>
         <ProfilePhoto uid={uid} photo={worker.photo} />
 
         <BasicInfo uid={uid} worker={worker} />
 
-        <Services />
+        <Services uid={uid} photos_services={worker.photos_services} />
       </section>
     );
   } else if (!worker && found) {
     return <Loader />;
   } else if (!found) {
-    return <h1>not found</h1>;
+    return (
+      <h1>
+        Ups! <br /> Usuario no encontrado
+      </h1>
+    );
   }
 };
 
