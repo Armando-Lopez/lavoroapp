@@ -7,14 +7,20 @@ import M from "materialize-css";
 const ProfilePhoto = ({ uid, photo }) => {
   //
   const [file, setFile] = useState(null);
+  const [IsOwner, setOwner] = useState(false);
 
-  //activa el modal para subir foto
+  //verifica si el visitante es el dueño
   React.useEffect(() => {
-    const elems = document.querySelectorAll(".modal-photo");
-    M.Modal.init(elems, { dismissible: false });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (user.uid === uid) {
+          setOwner(true);
+        }
+      }
+    });
   }, []);
 
-  const handlefileChange = async (e) => setFile(e.target.files[0]);
+  const handlefileChange = (e) => setFile(e.target.files[0]);
 
   //sube la foto
   const handleSubmit = async (e) => {
@@ -41,7 +47,7 @@ const ProfilePhoto = ({ uid, photo }) => {
     const washingtonRef = db.collection("workers").doc(uid);
     try {
       await washingtonRef.update({ photo: fileURL });
-      console.log("Foto actulizada con exito");
+      M.toast({ html: "Foto actualizada" });
       document.getElementById("photo").src = fileURL;
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -59,15 +65,35 @@ const ProfilePhoto = ({ uid, photo }) => {
           className="responsive-img circle"
           alt="userphoto"
         />
-
-        <button
-          data-target="modal-photo"
-          className="btn-floating modal-trigger left-align blue btn-cambiar-foto"
-        >
-          <i className="material-icons">camera_alt</i>
-        </button>
-        <div className="divider"></div>
       </div>
+
+      {IsOwner && (
+        <ModalChangePhoto
+          handlefileChange={handlefileChange}
+          handleSubmit={handleSubmit}
+          cancel={cancel}
+        />
+      )}
+      <div className="divider"></div>
+    </div>
+  );
+};
+
+const ModalChangePhoto = ({ handlefileChange, handleSubmit, cancel }) => {
+  //activa el modal para subir foto
+  React.useEffect(() => {
+    const elems = document.querySelectorAll(".modal-photo");
+    M.Modal.init(elems, { dismissible: false });
+  }, []);
+
+  return (
+    <>
+      <button
+        data-target="modal-photo"
+        className="btn-floating modal-trigger left-align blue btn-cambiar-foto"
+      >
+        <i className="material-icons">camera_alt</i>
+      </button>
 
       <div id="modal-photo" className="modal modal-photo">
         <div className="modal-content">
@@ -97,9 +123,8 @@ const ProfilePhoto = ({ uid, photo }) => {
             </button>
           </form>
         </div>
-        <div className="modal-footer"></div>
       </div>
-    </div>
+    </>
   );
 };
 

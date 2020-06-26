@@ -8,13 +8,13 @@
   /* position: relative; */
   max-height: 200px;
 }
-.photo-container .btn-cambiar-foto {
+.btn-cambiar-foto {
   position: absolute;
   left: 0;
   bottom: 0;
   z-index: 10;
 }
-.photo-container .btn-cambiar-foto i {
+.btn-cambiar-foto i {
   font-size: 30px;
 }
 

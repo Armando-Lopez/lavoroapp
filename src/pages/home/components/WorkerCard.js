@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const WorkerCard = ({ id, first_name, last_name, photo, services }) => {
   return (
     <li className="collection-item avatar card-panel">
-      <Link to={`/profile/${id}`}>
+      <Link to={`workerprofile/${id}`}>
         <img
           src="https://source.unsplash.com/random"
           alt={first_name}

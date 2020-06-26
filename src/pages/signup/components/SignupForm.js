@@ -48,6 +48,7 @@ const SignupForm = () => {
         photo: "",
         description: "",
         services: [],
+        photos_services: "",
       });
       autilogin(data); //llama a la funcion de autologgear al usuario
     } catch (error) {
