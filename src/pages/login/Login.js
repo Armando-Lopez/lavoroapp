@@ -6,7 +6,7 @@ import "./css/login.css";
 
 const Login = () => {
   return (
-    <section className="center-align">
+    <section className="login-section center-align">
       <div className="bg blue"></div>
       <div className="content">
         <img src={logo} alt="logo" />
