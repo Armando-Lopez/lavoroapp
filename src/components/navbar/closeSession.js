@@ -6,7 +6,7 @@ const closeSession = () => {
     .signOut()
     .then((res) => {
       console.log(res);
-      window.location.href = "/login";
+      window.location.href = "/";
     })
     .catch((error) => {
       console.log(error);
