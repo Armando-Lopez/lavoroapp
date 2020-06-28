@@ -3,11 +3,13 @@ import firebase from "firebase";
 import db from "../../../services/firebase/dbconfig";
 import default_photo from "../../../photo_default.png";
 import M from "materialize-css";
+import Loader from "../../../components/loader/Loader";
 
 const ProfilePhoto = ({ uid, photo }) => {
   //
   const [file, setFile] = useState(null);
   const [IsOwner, setOwner] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   //verifica si el visitante es el dueño
   React.useEffect(() => {
@@ -26,6 +28,7 @@ const ProfilePhoto = ({ uid, photo }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const storageRef = firebase.storage().ref();
       const fileRef = storageRef.child(file.name);
       await fileRef.put(file);
@@ -48,6 +51,7 @@ const ProfilePhoto = ({ uid, photo }) => {
     try {
       await washingtonRef.update({ photo: fileURL });
       M.toast({ html: "Foto actualizada" });
+      setLoading(false);
       document.getElementById("photo").src = fileURL;
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -57,25 +61,28 @@ const ProfilePhoto = ({ uid, photo }) => {
   const cancel = () => document.querySelector(".form-photo").reset();
 
   return (
-    <div className="row">
-      <div className="photo-container col s12 center-align">
-        <img
-          id="photo"
-          src={photo ? photo : default_photo}
-          className="responsive-img circle"
-          alt="userphoto"
-        />
-      </div>
+    <>
+      {loading && <Loader />}
+      <div className="row">
+        <div className="photo-container col s12 center-align">
+          <img
+            id="photo"
+            src={photo ? photo : default_photo}
+            className="responsive-img circle"
+            alt="userphoto"
+          />
+        </div>
 
-      {IsOwner && (
-        <ModalChangePhoto
-          handlefileChange={handlefileChange}
-          handleSubmit={handleSubmit}
-          cancel={cancel}
-        />
-      )}
-      <div className="divider"></div>
-    </div>
+        {IsOwner && (
+          <ModalChangePhoto
+            handlefileChange={handlefileChange}
+            handleSubmit={handleSubmit}
+            cancel={cancel}
+          />
+        )}
+        <div className="divider"></div>
+      </div>
+    </>
   );
 };
 

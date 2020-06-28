@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import db from "../../services/firebase/dbconfig";
-import Loader from "../../components/Loader";
+import Loader from "../../components/loader/Loader";
 
 //components
 import ProfilePhoto from "./components/ProfilePhoto";
