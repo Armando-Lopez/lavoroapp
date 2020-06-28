@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import WorkerCard from "./WorkerCard";
-import Loader from "../../../components/Loader";
+import Loader from "../../../components/loader/Loader";
 import db from "../../../services/firebase/dbconfig";
 
 const WorkersSection = () => {

@@ -1,0 +1,30 @@
+.loader-container {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: 0%;
+  background-color: #03a8f456;
+  z-index: 100;
+  /* pointer-events: ; */
+}
+.loader-container img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  border-radius: 50%;
+  animation: animateLogo 2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+  transform-origin: center;
+  transition: all 1s;
+}
+
+@keyframes animateLogo {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}

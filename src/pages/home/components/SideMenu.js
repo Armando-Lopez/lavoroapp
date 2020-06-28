@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Session from "../../../services/localStorageService";
 
 const userToken = Session.getCurrent();
-console.log(userToken);
 
 const SideMenu = () => {
   return (
@@ -26,7 +25,7 @@ const SideMenu = () => {
         </div>
       </li>
       <li>
-        <a href={`/profile/${userToken}`}>
+        <a href={`/workerprofile/${userToken}`}>
           <i className="material-icons">person</i>
           Perfil
         </a>

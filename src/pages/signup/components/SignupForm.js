@@ -1,133 +1,236 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 //firebase
 import firebase from "firebase";
 import db from "../../../services/firebase/dbconfig";
 
+//inicializador js para materialze
 import M from "materialize-css";
 
+import Loader from "../../../components/loader/Loader";
+
 const SignupForm = () => {
+  //validador de formualrio
   const { register, errors, handleSubmit } = useForm();
 
-  const initialUserData = {
-    first_name: "",
-    last_name: "",
-    birthday: "",
-    description: "",
-    services: [],
-  };
+  const [isLoading, setLoading] = useState(false);
+  const [hasSignup, setSignup] = useState(undefined);
+  const [loginError, setLoginError] = useState(false);
 
+  //validas si las contraseñas son iguales
   const onSubmit = (data) => {
     if (data) {
       if (data.password === data.password2) {
-        registrar(data);
+        setLoading(true);
+        registrar(data); // llama a la funcion para registrar
       } else {
         M.toast({ html: "Las contraseñas no coinciden" });
       }
     }
   };
 
+  //registra al usuario en firebase
   const registrar = (data) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(data.email, data.password)
-      .then(async (cred) => {
-        await db.collection("workers").doc(cred.user.uid).set(initialUserData);
-        autilogin(data);
+      .then((cred) => {
+        console.log(cred.additionalUserInfo.isNewUser);
+        localStorage.setItem("IsNewUSer", true);
+        createWorkerDB(cred, data);
       })
       .catch((error) => {
-        M.toast({ html: error.code });
+        //errores al registrar al usuario
+        setLoading(false);
+        console.log(error);
+        if (error.code === "auth/email-already-in-use") {
+          M.toast({ html: "Correo usado por otro usuario" });
+        }
         M.toast({ html: error.message });
       });
   };
 
-  const autilogin = (data) => {
+  const createWorkerDB = async (cred, data) => {
+    try {
+      //despues del registro crea una colleccion para los datos basicos del usuario
+      await db.collection("workers").doc(cred.user.uid).set({
+        first_name: data.first_name.trim(),
+        last_name: data.last_name.trim(),
+        birthday: data.birthday.trim(),
+        photo: "",
+        description: "",
+        services: [],
+        photos_services: [],
+      });
+      autiLogin(data); //llama a la funcion de autologgear al usuario
+    } catch (error) {
+      //errores al crear la coleccion de datos
+      setLoading(false);
+      console.log(error);
+      M.toast({ html: "Hubo un error al crear la base de datos" });
+      M.toast({ html: error.message });
+    }
+  };
+
+  //autologgeado
+  const autiLogin = (data) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(data.email, data.password)
       .then((cred) => {
-        console.log(cred);
+        //mensaje de exito
         M.toast({
           html: "Usuario creado exitosamente",
           completeCallback: function () {
-            window.location.href = `/profile/${cred.user.uid}`;
+            setSignup(cred.user.uid);
           },
         });
       })
       .catch((error) => {
+        //errores al autologgear
+        setLoading(false);
         M.toast({ html: error.code });
         M.toast({ html: error.message });
+        M.toast({ html: "Hubo un error al iniciar sesión" });
+        setLoginError(true);
       });
   };
 
+  //redirecciona al usuario a su perfil para continuar con la configuracion de su perfil
+  if (hasSignup) {
+    return <Redirect to={`/workerprofile/${hasSignup}`} />;
+  }
+  if (loginError) {
+    return <Redirect to="/login" />;
+  }
   return (
-    <form className="col s12" onSubmit={handleSubmit(onSubmit)}>
-      <div className="card-panel">
-        <div className="input-field">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className="validate"
-            ref={register({
-              required: {
-                value: true,
-                message: "Correo requerido",
-              },
-              pattern: {
-                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                message: "Correo no valido",
-              },
-            })}
-          />
-          <label htmlFor="email">¿Cuál es tu correo electronico?</label>
-          <span className="helper-text red-text">{errors?.email?.message}</span>
-        </div>
+    <>
+      {isLoading && <Loader />}
+      <form className="col s12" onSubmit={handleSubmit(onSubmit)}>
+        <div className="card-panel">
+          <div className="input-field">
+            <input
+              name="first_name"
+              type="text"
+              className="validate"
+              placeholder="Nombres"
+              ref={register({
+                required: { value: true, message: "El nombre es requerido" },
+                minLength: { value: 3, message: "Minimo 3 caracteres" },
+                maxLength: { value: 25, message: "Minimo 25 caracteres" },
+              })}
+              autoComplete="off"
+            />
+            <label htmlFor="first_name">¿Cuál es tu nombre?</label>
+            <span className="helper-text red-text">
+              {errors?.first_name?.message}
+            </span>
+          </div>
 
-        <div className="input-field">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className="validate"
-            ref={register({
-              required: { value: true, message: "Contraseña requerida" },
-              minLength: { value: 5, message: "Minimo 5 caracteres" },
-            })}
-          />
-          <label htmlFor="password">Crea una contraseña</label>
-          <span className="helper-text red-text">
-            {errors?.password?.message}
-          </span>
-        </div>
+          <div className="input-field">
+            <input
+              name="last_name"
+              type="text"
+              className="validate"
+              placeholder="Apellidos"
+              ref={register({
+                required: { value: true, message: "El apellido es requerido" },
+                minLength: { value: 5, message: "Minimo 3 caracteres" },
+                maxLength: { value: 25, message: "Minimo 25 caracteres" },
+              })}
+              autoComplete="off"
+            />
+            <label htmlFor="last_name">¿Cuál es tu apellido?</label>
+            <span className="helper-text red-text">
+              {errors?.last_name?.message}
+            </span>
+          </div>
 
-        <div className="input-field">
-          <input
-            type="password"
-            id="password2"
-            name="password2"
-            className="validate"
-            ref={register({
-              required: { value: true, message: "Contraseña requerida" },
-              minLength: { value: 5, message: "Minimo 5 caracteres" },
-            })}
-          />
-          <label htmlFor="password2">Confirma tu contraseña</label>
-          <span className="helper-text red-text">
-            {errors?.password2?.message}
-          </span>
-        </div>
+          <div className="input-field">
+            <input
+              name="birthday"
+              type="date"
+              className="validate"
+              ref={register({
+                required: {
+                  value: true,
+                  message: "Fecha de nacimiento requerida",
+                },
+              })}
+            />
+            <label htmlFor="last_name">¿Cuándo naciste?</label>
+            <span className="helper-text red-text">
+              {errors?.birthday?.message}
+            </span>
+          </div>
+          <div className="input-field">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="validate"
+              ref={register({
+                required: {
+                  value: true,
+                  message: "Correo requerido",
+                },
+                pattern: {
+                  value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                  message: "Correo no valido",
+                },
+              })}
+            />
+            <label htmlFor="email">¿Cuál es tu correo electronico?</label>
+            <span className="helper-text red-text">
+              {errors?.email?.message}
+            </span>
+          </div>
 
-        <button
-          type="submit"
-          className="btn light-blue darken-3 waves-effect waves-light"
-        >
-          ¡A camellar!
-        </button>
-      </div>
-    </form>
+          <div className="input-field">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="validate"
+              ref={register({
+                required: { value: true, message: "Contraseña requerida" },
+                minLength: { value: 5, message: "Minimo 5 caracteres" },
+              })}
+            />
+            <label htmlFor="password">Crea una contraseña</label>
+            <span className="helper-text red-text">
+              {errors?.password?.message}
+            </span>
+          </div>
+
+          <div className="input-field">
+            <input
+              type="password"
+              id="password2"
+              name="password2"
+              className="validate"
+              ref={register({
+                required: { value: true, message: "Contraseña requerida" },
+                minLength: { value: 5, message: "Minimo 5 caracteres" },
+              })}
+            />
+            <label htmlFor="password2">Confirma tu contraseña</label>
+            <span className="helper-text red-text">
+              {errors?.password2?.message}
+            </span>
+          </div>
+
+          <button
+            type="submit"
+            className="btn light-blue darken-3 waves-effect waves-light"
+          >
+            ¡A camellar!
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

@@ -1,12 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../logo.png";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import firebase from "firebase";
 //css
+import M from "materialize-css";
 import "./css/login.css";
 
 const Login = () => {
+  const [hasSignin, SetSignin] = useState(false);
+
+  const Signin = (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        SetSignin(true);
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case "auth/invalid-email":
+            M.toast({ html: "Correo invalido" });
+            break;
+
+          case "auth/wrong-password":
+            M.toast({ html: "contraseña invalida" });
+            break;
+          case "auth/user-not-found":
+            M.toast({ html: "El usuario no fue encontrado" });
+            break;
+          default:
+            M.toast({ html: "Ocurrio un error" });
+            break;
+        }
+      });
+  };
+
+  if (hasSignin) {
+    return <Redirect to="/" />;
+  }
   return (
-    <section className="center-align">
+    <section className="login-section center-align">
       <div className="bg blue"></div>
       <div className="content">
         <img src={logo} alt="logo" />
@@ -26,10 +62,13 @@ const Login = () => {
                 <label htmlFor="email">Email</label>
               </div>
               <div className="input-field col s12">
-                <input id="password" type="text" className="validate" />
+                <input id="password" type="password" className="validate" />
                 <label htmlFor="password">Contraseña</label>
               </div>
-              <button className="waves-effect waves-light btn-small blue">
+              <button
+                className="waves-effect waves-light btn-small blue"
+                onClick={Signin}
+              >
                 Ingresar
               </button>
               <p>

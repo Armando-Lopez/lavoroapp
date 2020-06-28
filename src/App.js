@@ -24,7 +24,7 @@ const App = () => {
           <Login />
         </Route>
 
-        <Route exact path="/profile/:uid">
+        <Route exact path="/workerprofile/:uid">
           <WorkerProfile />
         </Route>
 
