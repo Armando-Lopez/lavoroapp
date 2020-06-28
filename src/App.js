@@ -6,6 +6,7 @@ import Home from "./pages/home/Home";
 import Signup from "./pages/signup/Signup";
 import Login from "./pages/login/Login";
 import WorkerProfile from "./pages/workerprofile/WorkerProfile";
+import Hire from "./pages/hire/hire";
 
 const App = () => {
   return (
@@ -25,6 +26,10 @@ const App = () => {
 
         <Route exact path="/profile/:uid">
           <WorkerProfile />
+        </Route>
+
+        <Route exact path="/hire/:uid">
+          <Hire />
         </Route>
       </Switch>
     </Router>
