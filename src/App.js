@@ -28,7 +28,7 @@ const App = () => {
           <WorkerProfile />
         </Route>
 
-        <Route exact path="/hire/:uid">
+        <Route exact path="/hire/:uid?">
           <Hire />
         </Route>
       </Switch>
