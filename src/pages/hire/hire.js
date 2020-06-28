@@ -3,13 +3,13 @@ import logo from "../../logo.png";
 
 const Hire = () => {
   return (
-    <div>
+    <div className="container section center-align">
       <img src={logo} alt="logo" />
-      <h6 className="black-text">
+      <h6 className="black-text center-align">
         Diligencie este formulario y pronto me pondre en contacto.
       </h6>
       <div className="row">
-        <form className="col s12">
+        <form className=" col s12">
           <div className="row">
             <div className="input-field col s6">
               <i class="material-icons prefix">account_circle</i>
@@ -56,7 +56,7 @@ const Hire = () => {
             </div>
           </div>
           <button
-            class="btn waves-effect waves-light"
+            class="btn blue waves-effect waves-light"
             type="submit"
             name="action"
           >
