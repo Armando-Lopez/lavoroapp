@@ -46,8 +46,13 @@ const ModalUploadPhotoService = ({ uid }) => {
   const [file, setFile] = useState(null);
 
   React.useEffect(() => {
-    const elems = document.querySelectorAll(".modal-upload-service");
-    M.Modal.init(elems, { dismissible: false });
+    const elem = document.querySelector("#modal-upload-photo-service");
+    M.Modal.init(elem, {
+      dismissible: false,
+      preventScrolling: true,
+      inDuration: 100,
+      outDuration: 100,
+    });
   }, []);
 
   const handleFileChange = (e) => setFile(e.target.files[0]);

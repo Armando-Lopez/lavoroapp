@@ -71,6 +71,14 @@ const ProfilePhoto = ({ uid, photo }) => {
             className="responsive-img circle"
             alt="userphoto"
           />
+          {IsOwner && (
+            <button
+              data-target="modal-change-photo"
+              className="btn-floating modal-trigger left-align blue btn-cambiar-foto"
+            >
+              <i className="material-icons">camera_alt</i>
+            </button>
+          )}
         </div>
 
         {IsOwner && (
@@ -89,20 +97,13 @@ const ProfilePhoto = ({ uid, photo }) => {
 const ModalChangePhoto = ({ handlefileChange, handleSubmit, cancel }) => {
   //activa el modal para subir foto
   React.useEffect(() => {
-    const elems = document.querySelectorAll(".modal-photo");
-    M.Modal.init(elems, { dismissible: false });
+    const elem = document.querySelector("#modal-change-photo");
+    M.Modal.init(elem, { dismissible: false });
   }, []);
 
   return (
     <>
-      <button
-        data-target="modal-photo"
-        className="btn-floating modal-trigger left-align blue btn-cambiar-foto"
-      >
-        <i className="material-icons">camera_alt</i>
-      </button>
-
-      <div id="modal-photo" className="modal modal-photo">
+      <div id="modal-change-photo" className="modal modal-photo">
         <div className="modal-content">
           <p>Selecciona tu nueva Foto</p>
 
@@ -130,6 +131,7 @@ const ModalChangePhoto = ({ handlefileChange, handleSubmit, cancel }) => {
             </button>
           </form>
         </div>
+        <div className="modal-footer"></div>
       </div>
     </>
   );

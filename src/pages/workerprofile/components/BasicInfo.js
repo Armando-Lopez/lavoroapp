@@ -62,8 +62,13 @@ const ModalEditInfo = ({ uid, worker }) => {
   const [description, setDescription] = useState(worker.description);
 
   useEffect(() => {
-    const elems = document.querySelectorAll(".modal");
-    M.Modal.init(elems);
+    const elem = document.querySelector("#modal-form-info");
+    M.Modal.init(elem, {
+      dismissible: false,
+      preventScrolling: true,
+      inDuration: 100,
+      outDuration: 100,
+    });
   }, []);
 
   const handleInputServices = (ev) => {
@@ -139,10 +144,13 @@ const ModalEditInfo = ({ uid, worker }) => {
         </div>
 
         <button
-          className="btn modal-close blue waves-effect waves-light white-text"
+          className="btn modal-close green waves-effect waves-light white-text"
           onClick={save}
         >
           Guardar
+        </button>
+        <button className="btn modal-close red waves-effect waves-light white-text">
+          Cancelar
         </button>
       </div>
     </div>
