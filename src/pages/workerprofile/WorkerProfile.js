@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import firebase from "firebase";
 import db from "../../services/firebase/dbconfig";
 import Loader from "../../components/loader/Loader";
 
@@ -7,6 +8,7 @@ import Loader from "../../components/loader/Loader";
 import ProfilePhoto from "./components/ProfilePhoto";
 import BasicInfo from "./components/BasicInfo";
 import Services from "./components/Services";
+import Contact from "./components/Contact";
 
 //css
 import "./css/workerprofile.css";
@@ -17,9 +19,19 @@ const WorkerProfile = () => {
   const [worker, setWorker] = useState(undefined);
   const [loaded, setLoaded] = useState(false);
   const [found, setFound] = useState(true);
+  const [IsOwner, setOwner] = useState(false);
 
   useEffect(() => {
     getWorker();
+
+    //verifica si el visitante es el dueño del perfil
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (user.uid === uid) {
+          setOwner(true);
+        }
+      }
+    });
   }, []);
 
   const getWorker = () => {
@@ -42,11 +54,17 @@ const WorkerProfile = () => {
   if (worker && loaded && found) {
     return (
       <section>
-        <ProfilePhoto uid={uid} photo={worker.photo} />
+        <ProfilePhoto uid={uid} photo={worker.photo} IsOwner={IsOwner} />
 
-        <BasicInfo uid={uid} worker={worker} />
+        <BasicInfo uid={uid} worker={worker} IsOwner={IsOwner} />
 
-        <Services uid={uid} photos_services={worker.photos_services} />
+        <Services
+          uid={uid}
+          photos_services={worker.photos_services}
+          IsOwner={IsOwner}
+        />
+
+        {!IsOwner && <Contact uid={uid} />}
       </section>
     );
   } else if (!worker && found) {

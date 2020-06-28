@@ -5,43 +5,33 @@ import default_photo from "../../../photo_default.png";
 import M from "materialize-css";
 import Loader from "../../../components/loader/Loader";
 
-const ProfilePhoto = ({ uid, photo }) => {
+const ProfilePhoto = ({ uid, photo, IsOwner }) => {
   //
   const [file, setFile] = useState(null);
-  const [IsOwner, setOwner] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  //verifica si el visitante es el dueño
-  React.useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        if (user.uid === uid) {
-          setOwner(true);
-        }
-      }
-    });
-  }, []);
 
   const handlefileChange = (e) => setFile(e.target.files[0]);
 
   //sube la foto
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const storageRef = firebase.storage().ref();
-      const fileRef = storageRef.child(file.name);
-      await fileRef.put(file);
+    if (file) {
+      try {
+        setLoading(true);
+        const storageRef = firebase.storage().ref();
+        const fileRef = storageRef.child(file.name);
+        await fileRef.put(file);
 
-      //guarda la direccio del url de la foto
-      const fileURL = await fileRef.getDownloadURL();
+        //guarda la direccio del url de la foto
+        const fileURL = await fileRef.getDownloadURL();
 
-      if (fileURL) {
-        updatePhoto(fileURL);
+        if (fileURL) {
+          updatePhoto(fileURL);
+        }
+      } catch (error) {
+        console.log(error);
+        M.toast({ html: "Ha ocurrido un error" });
       }
-    } catch (error) {
-      console.log(error);
-      M.toast({ html: "Ha ocurrido un error" });
     }
   };
 
@@ -72,22 +62,23 @@ const ProfilePhoto = ({ uid, photo }) => {
             alt="userphoto"
           />
           {IsOwner && (
-            <button
-              data-target="modal-change-photo"
-              className="btn-floating modal-trigger left-align blue btn-cambiar-foto"
-            >
-              <i className="material-icons">camera_alt</i>
-            </button>
+            <>
+              <button
+                data-target="modal-change-photo"
+                className="btn-floating modal-trigger left-align blue btn-cambiar-foto"
+              >
+                <i className="material-icons">camera_alt</i>
+              </button>
+
+              <ModalChangePhoto
+                handlefileChange={handlefileChange}
+                handleSubmit={handleSubmit}
+                cancel={cancel}
+              />
+            </>
           )}
         </div>
 
-        {IsOwner && (
-          <ModalChangePhoto
-            handlefileChange={handlefileChange}
-            handleSubmit={handleSubmit}
-            cancel={cancel}
-          />
-        )}
         <div className="divider"></div>
       </div>
     </>
@@ -95,7 +86,6 @@ const ProfilePhoto = ({ uid, photo }) => {
 };
 
 const ModalChangePhoto = ({ handlefileChange, handleSubmit, cancel }) => {
-  //activa el modal para subir foto
   React.useEffect(() => {
     const elem = document.querySelector("#modal-change-photo");
     M.Modal.init(elem, { dismissible: false });
