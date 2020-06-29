@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import firebase from "firebase";
-import Dropdown from "./Dropdown";
+import Notifications from "./Notifications";
 import closeSession from "./closeSession";
+import logo from "../../logo.png";
 //css
 import "./css/navbar.css";
 
@@ -20,21 +20,27 @@ const Navbar = () => {
   if (user) {
     return (
       <div className="navbar-fixed">
-        <nav className="blue accent-3">
+        <nav className="blue accent-2">
           <div className="nav-wrapper">
-            <ul id="nav-mobile" className="right">
-              <li>
-                <Link to={`/workerprofile/${user.uid}`}>
-                  <span>Perfil</span>
-                </Link>
+            <ul id="nav-mobile">
+              <li className="left">
+                <a href="/">
+                  <img src={logo} className="responsive-img lef" width="50" />
+                </a>
               </li>
 
-              <li>
-                <Dropdown uid={user.iud} />
-              </li>
-
-              <li>
+              <li className="right">
                 <a onClick={closeSession}>Cerrar sesión</a>
+              </li>
+
+              <li className="right">
+                <Notifications uid={user.uid} />
+              </li>
+
+              <li className="right">
+                <a href={`/workerprofile/${user.uid}`}>
+                  <span>Perfil</span>
+                </a>
               </li>
             </ul>
           </div>

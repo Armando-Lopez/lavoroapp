@@ -12,6 +12,7 @@ import Contact from "./components/Contact";
 
 //css
 import "./css/workerprofile.css";
+import Navbar from "../../components/navbar/Navbar";
 
 const WorkerProfile = () => {
   const { uid } = useParams();
@@ -54,6 +55,8 @@ const WorkerProfile = () => {
   if (worker && loaded && found) {
     return (
       <section>
+        <Navbar />
+
         <ProfilePhoto uid={uid} photo={worker.photo} IsOwner={IsOwner} />
 
         <BasicInfo uid={uid} worker={worker} IsOwner={IsOwner} />
