@@ -2,7 +2,7 @@
 
   ># [Lavoro App](https://lavoroapp.vercel.app/)
 
-  #### En **Lavoro app** encontrar al trabajor indicado que necesitas. 
+  #### En **Lavoro app** encontrarás al trabajador indicado que necesitas. 
   #### Desde peluqueros hasta ingenieros, busca encuentra, contacta y contrata.
   #### Si eres un trabajador ofrecioendo tus servicios, puedes crear tu cuenta y darte a conocer.
   
