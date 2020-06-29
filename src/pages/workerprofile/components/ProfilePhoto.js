@@ -53,7 +53,7 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
   return (
     <>
       {loading && <Loader />}
-      <div className="row">
+      <div className="row section">
         <div className="photo-container col s12 center-align">
           <img
             id="photo"
