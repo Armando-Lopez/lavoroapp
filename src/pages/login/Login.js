@@ -46,7 +46,7 @@ const Login = () => {
       <div className="bg blue"></div>
       <div className="content">
         <img src={logo} alt="logo" />
-        <h1 className="white-text">Services</h1>
+        <h1 className="white-text">Lavoro App</h1>
         <div className="row container">
           <form className="col s12 white container form-login">
             <h2 className="blue-text">Iniciar sesion</h2>
