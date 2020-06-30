@@ -4,21 +4,35 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import db from "../../services/firebase/dbconfig";
 import firebase from "firebase";
+import M from "materialize-css";
 
 const Hire = () => {
   const { uid } = useParams();
   const { register, errors, handleSubmit } = useForm();
   const onsubmit = (data) => {
-    console.log(data);
     db.collection("notifications")
       .doc(uid)
       .update({
         notifications: firebase.firestore.FieldValue.arrayUnion({
           seen: false,
-          title: "Tienes una nueva contratacion",
+          title: "Felicidads. Alguien quiere contar con tus servicios",
           body: data,
         }),
         wasOpen: false,
+      })
+      .then((res) => {
+        M.toast({
+          html:
+            "La Solicitud envida con exito. Puedes volver <button class='btn-flat toast-action' onClick='window.history.back()'>Volver</button>",
+          displayLength: 1000 * 10,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        M.toast({
+          html:
+            "Ha ocurrido un error al enviar la solicitud. Intentalo más tarded",
+        });
       });
   };
   return (
@@ -126,8 +140,13 @@ const Hire = () => {
                 name="description"
                 id="description"
                 className="materialize-textarea"
+                ref={register({
+                  required: { value: false },
+                })}
               ></textarea>
-              <label htmlFor="description">Cuentame sobre el proyecto</label>
+              <label htmlFor="description">
+                Cuentame en qué puedo ayudarte
+              </label>
             </div>
           </div>
           <button

@@ -157,7 +157,7 @@ const SignupForm = () => {
               placeholder="Apellidos"
               ref={register({
                 required: { value: true, message: "El apellido es requerido" },
-                minLength: { value: 5, message: "Minimo 3 caracteres" },
+                minLength: { value: 5, message: "Minimo 5 caracteres" },
                 maxLength: { value: 25, message: "Minimo 25 caracteres" },
               })}
               autoComplete="off"
@@ -216,7 +216,7 @@ const SignupForm = () => {
               className="validate"
               ref={register({
                 required: { value: true, message: "Contraseña requerida" },
-                minLength: { value: 5, message: "Minimo 5 caracteres" },
+                minLength: { value: 6, message: "Minimo 6 caracteres" },
               })}
             />
             <label htmlFor="password">Crea una contraseña</label>
@@ -233,7 +233,7 @@ const SignupForm = () => {
               className="validate"
               ref={register({
                 required: { value: true, message: "Contraseña requerida" },
-                minLength: { value: 5, message: "Minimo 5 caracteres" },
+                minLength: { value: 6, message: "Minimo 6 caracteres" },
               })}
             />
             <label htmlFor="password2">Confirma tu contraseña</label>
