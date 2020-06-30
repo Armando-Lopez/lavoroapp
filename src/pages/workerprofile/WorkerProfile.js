@@ -53,6 +53,8 @@ const WorkerProfile = () => {
   };
 
   if (worker && loaded && found) {
+    console.log(worker);
+
     return (
       <section>
         <Navbar />

@@ -37,8 +37,6 @@ const SignupForm = () => {
       .auth()
       .createUserWithEmailAndPassword(data.email, data.password)
       .then((cred) => {
-        console.log(cred.additionalUserInfo.isNewUser);
-        localStorage.setItem("IsNewUSer", true);
         createWorkerDB(cred, data);
       })
       .catch((error) => {
@@ -85,6 +83,7 @@ const SignupForm = () => {
           html: "Usuario creado exitosamente",
           completeCallback: function () {
             setSignup(cred.user.uid);
+            createFirstNotification(cred.user.uid);
           },
         });
       })
@@ -98,9 +97,28 @@ const SignupForm = () => {
       });
   };
 
+  const createFirstNotification = async (uid) => {
+    try {
+      const notificationsRef = db.collection("notifications").doc(uid);
+      const res = await notificationsRef.set({
+        wasOpen: false,
+        notifications: firebase.firestore.FieldValue.arrayUnion({
+          seen: false,
+          link: `workerprofile/${uid}`,
+          title:
+            "Te damos la bienvenida a LavoroApp. Personaliza tu perfil y empieza ofrecer tus servicios.",
+        }),
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //redirecciona al usuario a su perfil para continuar con la configuracion de su perfil
   if (hasSignup) {
-    return <Redirect to={`/workerprofile/${hasSignup}`} />;
+    // return <Redirect to={`/workerprofile/${hasSignup}`} />;
+    return <Redirect to="/" />;
   }
   if (loginError) {
     return <Redirect to="/login" />;
@@ -112,6 +130,7 @@ const SignupForm = () => {
         <div className="card-panel">
           <div className="input-field">
             <input
+              id="first_name"
               name="first_name"
               type="text"
               className="validate"
@@ -131,6 +150,7 @@ const SignupForm = () => {
 
           <div className="input-field">
             <input
+              id="last_name"
               name="last_name"
               type="text"
               className="validate"
@@ -226,7 +246,7 @@ const SignupForm = () => {
             type="submit"
             className="btn light-blue darken-3 waves-effect waves-light"
           >
-            ¡A camellar!
+            REgistrame
           </button>
         </div>
       </form>

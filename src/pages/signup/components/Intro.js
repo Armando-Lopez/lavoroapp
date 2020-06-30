@@ -6,7 +6,7 @@ const Intro = () => (
   <div className="text">
     <img src={logo} className="responsive-img logo" alt="logo" />
     <p className="light-blue-text text-accent-4 flow-text">
-      Crear una cuenta. Empieza a dar a conocer tus Habilidades y ofrece tus
+      Crea una cuenta. Empieza a dar a conocer tus Habilidades y ofrece tus
       servicios.
     </p>
     <p className="flow-text">

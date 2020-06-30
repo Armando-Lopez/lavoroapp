@@ -44,6 +44,7 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
       setLoading(false);
       document.getElementById("photo").src = fileURL;
     } catch (error) {
+      M.toast({ html: "Ocurrió un error" });
       console.error("Error updating document: ", error);
     }
   };

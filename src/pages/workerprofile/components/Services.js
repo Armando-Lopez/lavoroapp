@@ -4,13 +4,10 @@ import db from "../../../services/firebase/dbconfig";
 import M from "materialize-css";
 import Loader from "../../../components/loader/Loader";
 
-const Services = (props) => {
-  const [photos_services, setPhotos_services] = useState(props.photos_services);
-
+const Services = ({ uid, photos_services, isOwner }) => {
   return (
     <div className="row">
-      <h3 className="center-align">Servicios</h3>
-      {props.IsOwner && (
+      {isOwner && (
         <>
           <div className="col s12">
             <button
@@ -20,12 +17,12 @@ const Services = (props) => {
               <i className="material-icons">add</i>
             </button>
           </div>
-          <ModalUploadPhotoService uid={props.uid} />
+          <ModalUploadPhotoService uid={uid} />
         </>
       )}
 
       <div className="col s12 photos-services">
-        <ServicesCarousel photos_services={photos_services} />
+        <ServicesPhotos photos_services={photos_services} IsOwner={isOwner} />
       </div>
     </div>
   );
@@ -121,37 +118,35 @@ const ModalUploadPhotoService = ({ uid }) => {
   );
 };
 
-const ServicesCarousel = ({ photos_services }) => {
+const ServicesPhotos = ({ photos_services, isOwner }) => {
+  const message = isOwner
+    ? "No has subido ninguna foto. Presiona el botón de agregar y muestranos lo que haces."
+    : "Este usuario no ha subido fotos de sus servicios";
+
   useEffect(() => {
-    const elem = document.querySelector(".carousel-services");
-    M.Carousel.init(elem, {
-      indicators: true,
-      dist: -150,
-      numVisible: 3,
-    });
-
-    const carroselinterval = setInterval(() => {
-      M.Carousel.getInstance(elem).next(1);
-    }, 5000);
-
-    return () => {
-      clearInterval(carroselinterval);
-    };
+    const elem = document.querySelectorAll(".materialboxed");
+    M.Materialbox.init(elem);
   }, []);
+
   return (
-    <ul className="carousel carousel-slider carousel-services">
-      {photos_services.map((item, index) => {
-        return (
-          <a key={index}>
-            <img
-              className="responsive-img carousel-item"
-              src={item}
-              alt="servicio"
-            />
-          </a>
-        );
-      })}
-    </ul>
+    <>
+      <h4 className="center-align">
+        {photos_services.length > 0 ? "Servicios" : message}
+      </h4>
+      <div className="services-cnt">
+        {photos_services.map((item, index) => {
+          return (
+            <div className="card center-align z-depth-2 service" key={index}>
+              <img
+                src={item}
+                className="responsive-img center materialboxed"
+                alt="servicio"
+              />
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
