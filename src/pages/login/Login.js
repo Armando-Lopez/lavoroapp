@@ -13,6 +13,7 @@ const Login = () => {
     e.preventDefault();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -28,10 +29,13 @@ const Login = () => {
           case "auth/wrong-password":
             M.toast({ html: "contraseña invalida" });
             break;
+
           case "auth/user-not-found":
             M.toast({ html: "El usuario no fue encontrado" });
             break;
+
           default:
+            console.log(error);
             M.toast({ html: "Ocurrio un error" });
             break;
         }

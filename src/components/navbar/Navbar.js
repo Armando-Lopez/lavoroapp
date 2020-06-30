@@ -25,12 +25,19 @@ const Navbar = () => {
             <ul id="nav-mobile">
               <li className="left">
                 <a href="/">
-                  <img src={logo} className="responsive-img lef" width="50" />
+                  <img
+                    src={logo}
+                    className="responsive-img lef"
+                    width="50"
+                    alt="logo"
+                  />
                 </a>
               </li>
 
               <li className="right">
-                <a onClick={closeSession}>Cerrar sesión</a>
+                <a href="#!" onClick={closeSession}>
+                  Cerrar sesión
+                </a>
               </li>
 
               <li className="right">
@@ -52,7 +59,18 @@ const Navbar = () => {
       <div className="navbar-fixed">
         <nav className="blue">
           <div className="nav-wrapper">
-            <ul id="nav-mobile" className="right">
+            <ul id="nav-mobile">
+              <li className="left">
+                <a href="/">
+                  <img
+                    src={logo}
+                    className="responsive-img lef"
+                    width="50"
+                    alt="logo"
+                  />
+                </a>
+              </li>
+
               <li>
                 <a href="/login">Inicia sesión</a>
               </li>

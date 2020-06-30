@@ -38,4 +38,16 @@
   margin-left: 5px;
   background-color: lightslategray;
 }
+.services-cnt {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.services-cnt .service {
+  margin: 5px;
+  width: 100%;
+  width: fit-content;
+  height: fit-content;
+  max-width: 350px;
+}
 /* FIN INFO */

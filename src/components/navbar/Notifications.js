@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
-import firebase from "firebase";
 import db from "../../services/firebase/dbconfig";
 import M from "materialize-css";
+import { logDOM } from "@testing-library/react";
 
 const Notifications = ({ uid }) => {
   const [notifications, setNotifications] = useState([]);
+  const [wasOpen, setOpen] = useState(false);
+  const [Unreads, setUnreads] = useState(0);
 
   const hasUnread = notifications.length > 0;
 
-  console.log(hasUnread);
+  // console.log(hasUnread);
 
   useEffect(() => {
     const notiRef = db.collection("notifications").doc(uid);
 
     notiRef.onSnapshot(
-      function (snapshot) {
-        console.log(snapshot.data());
-        setNotifications(snapshot.data().notifications);
+      (snapshot) => {
+        const data = snapshot.data();
+        setOpen(data.wasOpen);
+        setNotifications(data.notifications);
+        setUnreads(data.notifications.filter((noti) => noti.seen === false));
       },
-      function (error) {
+      (error) => {
         console.log(error);
       }
     );
@@ -46,20 +50,29 @@ const Notifications = ({ uid }) => {
 
   useEffect(() => {
     const elem = document.querySelector(".dropdown-trigger");
-    const instances = M.Dropdown.init(elem, {
+    M.Dropdown.init(elem, {
       closeOnClick: true,
       coverTrigger: false,
     });
     M.Dropdown.getInstance(elem).recalculateDimensions();
     // console.log(instances);
   }, []);
-  console.log(notifications);
+  // console.log(notifications);
 
   return (
     <>
-      {hasUnread && <span className="new badge">{notifications.length}</span>}
+      {hasUnread && (
+        <span
+          className="new badge"
+          data-badge-caption=""
+          style={{ fontWeight: "800" }}
+        >
+          {notifications.length}
+        </span>
+      )}
       <a
-        className={`dropdown-trigger ${hasUnread && "shake-bell"}`}
+        href="#!"
+        className={`dropdown-trigger ${!wasOpen && "shake-bell"}`}
         data-target="notifications"
       >
         <i className="material-icons">
@@ -80,7 +93,9 @@ const Notifications = ({ uid }) => {
           })
         ) : (
           <li className="blue accent-1 white-text">
-            <a className="white-text">No tienes notificaciones</a>
+            <a href="#!" className="white-text">
+              No tienes notificaciones
+            </a>
           </li>
         )}
       </ul>
