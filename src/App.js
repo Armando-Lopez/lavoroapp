@@ -7,7 +7,7 @@ import Signup from "./pages/signup/Signup";
 import Login from "./pages/login/Login";
 import WorkerProfile from "./pages/workerprofile/WorkerProfile";
 import Hire from "./pages/hire/hire";
-import Notification from "./pages/notifications/Notification";
+import Notification from "./pages/notification/Notification";
 
 const App = () => {
   return (
