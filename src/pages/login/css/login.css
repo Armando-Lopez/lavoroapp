@@ -1,0 +1,24 @@
+.login-section {
+  height: 100vh;
+  position: relative;
+}
+
+.login-section .bg {
+  position: absolute;
+  height: 50%;
+  width: 100%;
+}
+
+.login-section .content {
+  position: absolute;
+}
+
+.login-section .form-login {
+  border-radius: 20px;
+  border: 2px solid #03a9f4;
+}
+
+.login-section .form-login .divider {
+  height: 3px;
+  margin-bottom: 2em;
+}

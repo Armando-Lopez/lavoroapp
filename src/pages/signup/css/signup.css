@@ -1,0 +1,34 @@
+/* SIGNUP*/
+.signup-section {
+  position: relative;
+}
+
+.signup-section .text p {
+  font-size: 1.5em;
+}
+
+.signup-section .text p a {
+  text-decoration: underline;
+}
+
+.signup-section .logo {
+  width: 100px;
+}
+
+.signup-section .bg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50%;
+  background-color: #03a9f4;
+}
+
+.signup-section .content {
+  position: relative;
+  background-color: transparent;
+}
+
+.signup-section .card-panel {
+  border-radius: 10px;
+  border: 2px solid #03a9f4;
+}

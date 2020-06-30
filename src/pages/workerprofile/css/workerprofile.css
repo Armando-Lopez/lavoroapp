@@ -1,0 +1,53 @@
+/* FOTO */
+.photo-container {
+  position: relative;
+  /* height: 200px; */
+  /* width: 200px; */
+}
+.photo-container img {
+  /* position: relative; */
+  max-height: 200px;
+}
+.btn-cambiar-foto {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+}
+.btn-cambiar-foto i {
+  font-size: 30px;
+}
+
+/* FIN FOTO */
+.basic-info {
+  position: relative;
+}
+.basic-info .btn-edit-info {
+  position: absolute;
+  top: 10px;
+  right: 3px;
+}
+
+/* INFO */
+.serices-preview {
+  display: flex;
+  flex-wrap: wrap;
+}
+.serices-preview .service-item {
+  padding: 0 3px;
+  margin-left: 5px;
+  background-color: lightslategray;
+}
+.services-cnt {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.services-cnt .service {
+  margin: 5px;
+  width: 100%;
+  width: fit-content;
+  height: fit-content;
+  max-width: 350px;
+}
+/* FIN INFO */
