@@ -13,8 +13,10 @@
 }
 
 #notifications {
-  background-color: red;
+  padding: 3px;
   width: fit-content !important;
+  max-height: 400px;
+  overflow: scroll;
 }
 
 .shake-bell {

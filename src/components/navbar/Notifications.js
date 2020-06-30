@@ -1,93 +1,104 @@
 import React, { useState, useEffect } from "react";
+import firebase from "firebase";
 import db from "../../services/firebase/dbconfig";
 import M from "materialize-css";
-import { logDOM } from "@testing-library/react";
 
 const Notifications = ({ uid }) => {
   const [notifications, setNotifications] = useState([]);
-  const [wasOpen, setOpen] = useState(false);
+  const [wasOpen, setOpen] = useState(true);
   const [Unreads, setUnreads] = useState(0);
-
-  const hasUnread = notifications.length > 0;
-
-  // console.log(hasUnread);
 
   useEffect(() => {
     const notiRef = db.collection("notifications").doc(uid);
-
     notiRef.onSnapshot(
       (snapshot) => {
         const data = snapshot.data();
-        setOpen(data.wasOpen);
-        setNotifications(data.notifications);
-        setUnreads(data.notifications.filter((noti) => noti.seen === false));
+        if (data) {
+          setOpen(data.wasOpen);
+
+          setNotifications(data.notifications.reverse());
+
+          setUnreads(data.notifications.filter((noti) => noti.seen === false));
+        }
       },
       (error) => {
         console.log(error);
       }
     );
 
-    // const washingtonRef = db.collection("notifications").doc(uid);
-    // washingtonRef.update({
-    //   notifications: firebase.firestore.FieldValue.arrayUnion({
-    //     has_been_seen: true,
-    //     title: "Alguien te ha calificado",
-    //   }),
-    // });
+    setUnreads(notifications.filter((noti) => !noti.seen));
+    ///
 
-    // notiRef
-    //   .get()
-    //   .then((doc) => {
-    //     if (doc.exists) {
-    //       setNotifications(doc.data().notifications);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     M.toast({ html: "Ha ocurrido un error al obtener las notificaciones" });
-    //   });
-  }, [uid]);
-
-  useEffect(() => {
     const elem = document.querySelector(".dropdown-trigger");
     M.Dropdown.init(elem, {
       closeOnClick: true,
       coverTrigger: false,
     });
-    M.Dropdown.getInstance(elem).recalculateDimensions();
+    // M.Dropdown.getInstance(elem).recalculateDimensions();
     // console.log(instances);
   }, []);
-  // console.log(notifications);
+
+  const markBellOpen = () => {
+    if (!wasOpen) {
+      db.collection("notifications").doc(uid).update({
+        wasOpen: true,
+      });
+    }
+  };
+
+  const markNotiOpen = (noti, index) => {
+    console.log(index);
+    if (!notifications[index].seen) {
+      notifications[index].seen = true;
+      db.collection("notifications").doc(uid).update({
+        notifications: notifications,
+      });
+      console.log(notifications);
+    }
+    window.location.href = noti.link
+      ? noti.link
+      : `/notificationBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9VbshdBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9Vbshd/${JSON.stringify(
+          noti.body
+        )}`;
+  };
 
   return (
     <>
-      {hasUnread && (
+      {Unreads.length > 0 && (
         <span
-          className="new badge"
+          className="new badge blue accent-4 z-depth-3"
           data-badge-caption=""
           style={{ fontWeight: "800" }}
         >
-          {notifications.length}
+          {Unreads.length}
         </span>
       )}
       <a
         href="#!"
         className={`dropdown-trigger ${!wasOpen && "shake-bell"}`}
         data-target="notifications"
+        onClick={markBellOpen}
       >
         <i className="material-icons">
-          {hasUnread ? "notifications_active" : "notifications_none"}
+          {wasOpen ? "notifications_none" : "notifications_active"}
         </i>
       </a>
 
-      <ul id="notifications" className="dropdown-content">
+      <ul id="notifications" className="dropdown-content z-depth-2">
         {notifications.length > 0 ? (
           notifications.map((noti, index) => {
             return (
-              <li key={index} className="blue accent-1 white-text">
-                <a href="#!" className="white-text">
+              <li
+                key={index}
+                className={noti.seen ? "" : "blue accent-1"}
+                onClick={() => {
+                  markNotiOpen(noti, index);
+                }}
+              >
+                <a className={noti.seen ? "blue-text" : "white-text"}>
                   {noti.title}
                 </a>
+                <div className="divider">ffdf</div>
               </li>
             );
           })

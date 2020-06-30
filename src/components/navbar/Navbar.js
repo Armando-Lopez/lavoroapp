@@ -57,7 +57,7 @@ const Navbar = () => {
   } else {
     return (
       <div className="navbar-fixed">
-        <nav className="blue">
+        <nav className="blue accent-2">
           <div className="nav-wrapper">
             <ul id="nav-mobile">
               <li className="left">
@@ -71,8 +71,10 @@ const Navbar = () => {
                 </a>
               </li>
 
-              <li>
-                <a href="/login">Inicia sesión</a>
+              <li className="right">
+                <a href="/login">
+                  <span>Inicia sesión</span>
+                </a>
               </li>
             </ul>
           </div>
