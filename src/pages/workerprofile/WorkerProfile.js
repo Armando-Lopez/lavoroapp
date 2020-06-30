@@ -66,7 +66,7 @@ const WorkerProfile = () => {
         <Services
           uid={uid}
           photos_services={worker.photos_services}
-          IsOwner={IsOwner}
+          isOwner={IsOwner}
         />
 
         {!IsOwner && <Contact uid={uid} />}

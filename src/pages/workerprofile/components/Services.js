@@ -22,7 +22,7 @@ const Services = ({ uid, photos_services, isOwner }) => {
       )}
 
       <div className="col s12 photos-services">
-        <ServicesPhotos photos_services={photos_services} IsOwner={isOwner} />
+        <ServicesPhotos photos_services={photos_services} isOwner={isOwner} />
       </div>
     </div>
   );
