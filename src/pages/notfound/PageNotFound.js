@@ -8,7 +8,7 @@ const PageNotFound = () => {
       <h1>¡oops!</h1>
       <div className="four-cero-four">
         <h1 className="blue-text text-darken-4 four">4</h1>
-        <img className="logo" src={logo} />
+        <img className="logo-nf" src={logo} />
         <h1 className="blue-text text-darken-4 four">4</h1>
       </div>
       <p className="text-nf">No encontramos lo que buscas</p>
