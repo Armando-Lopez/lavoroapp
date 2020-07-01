@@ -9,10 +9,10 @@ const WorkerCard = ({ id, first_name, last_name, photo, services }) => {
         <img
           src={photo ? photo : photo_default}
           alt={first_name}
-          className="circle materialboxed"
+          className="circle"
           style={{ width: "70px", height: "70px" }}
         />
-        <div style={{ marginLeft: "25px", marginBottom: "10px" }}>
+        <div style={{ marginLeft: "25px" }}>
           <span className="title black-text">
             {first_name + " " + last_name}
           </span>

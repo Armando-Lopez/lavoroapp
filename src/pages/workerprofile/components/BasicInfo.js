@@ -7,37 +7,37 @@ const BasicInfo = ({ uid, worker, IsOwner }) => {
   //
 
   return (
-    <div className="row">
-      <div className="col s12 basic-info">
-        <div>
-          <h4 className="name">{worker.first_name + " " + worker.last_name}</h4>
+    <div className="col s12 basic-info">
+      <div>
+        <h4 className="name">{worker.first_name + " " + worker.last_name}</h4>
 
-          <ul className="serices-preview">
-            {worker.services.map((service, index) => (
-              <li key={index} className="service-item">{`${service} `}</li>
-            ))}
-          </ul>
+        <p className="serices-preview">
+          {worker.services.map((service, index) => (
+            <span key={index} className="chips">{`${service} `}</span>
+          ))}
+        </p>
 
-          <p className="description">
-            {worker.description ? worker.description : "Sin descripción"}
-          </p>
-        </div>
+        {/* <br /> */}
 
-        {IsOwner && (
-          <>
-            <button
-              data-target="modal-form-info"
-              className="btn-floating blue modal-trigger btn-edit-info"
-            >
-              <i className="material-icons">edit</i>
-            </button>
-
-            <ModalEditInfo uid={uid} worker={worker} />
-          </>
-        )}
-
-        <div className="divider"></div>
+        <p className="description">
+          {worker.description ? worker.description : "Sin descripción"}
+        </p>
       </div>
+
+      {IsOwner && (
+        <>
+          <button
+            data-target="modal-form-info"
+            className="btn-floating blue modal-trigger btn-edit-info"
+          >
+            <i className="material-icons">edit</i>
+          </button>
+
+          <ModalEditInfo uid={uid} worker={worker} />
+        </>
+      )}
+
+      <div className="divider"></div>
     </div>
   );
 };
