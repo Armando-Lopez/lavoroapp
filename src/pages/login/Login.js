@@ -48,7 +48,7 @@ const Login = () => {
   return (
     <section className="login-section center-align">
       <div className="bg blue"></div>
-      <div className="content">
+      <div className="content-login">
         <img src={logo} alt="logo" />
         <h1 className="white-text">Lavoro App</h1>
         <div className="row container">

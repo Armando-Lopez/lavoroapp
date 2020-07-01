@@ -47,12 +47,20 @@ const Notifications = ({ uid }) => {
   };
 
   const markNotiOpen = (noti, index) => {
-    console.log(index);
     if (!notifications[index].seen) {
       notifications[index].seen = true;
-      db.collection("notifications").doc(uid).update({
-        notifications: notifications,
-      });
+      db.collection("notifications")
+        .doc(uid)
+        .update({
+          notifications: notifications,
+        })
+        .then(() => {
+          window.location.href = noti.link
+            ? noti.link
+            : `/notificationBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9VbshdBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9Vbshd/${JSON.stringify(
+                noti.body
+              )}`;
+        });
     }
     window.location.href = noti.link
       ? noti.link
