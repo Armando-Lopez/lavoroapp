@@ -1,0 +1,39 @@
+.page-not-found-content {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.four-cero-four {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  /* background-color: turquoise; */
+}
+.four-cero-four .four {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  font-family: cursive;
+  font-size: 10em !important;
+}
+.logo {
+  /* align-self: flex-end; */
+  width: 100px;
+  height: 100px;
+  animation: animatelogo 10s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+}
+
+.text {
+  font-size: 2em;
+}
+.back {
+  font-weight: 500;
+}
+@keyframes animatelogo {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}

@@ -104,7 +104,7 @@ const SignupForm = () => {
         wasOpen: false,
         notifications: firebase.firestore.FieldValue.arrayUnion({
           seen: false,
-          link: `workerprofile/${uid}`,
+          link: `/workerprofile/${uid}`,
           title:
             "Te damos la bienvenida a LavoroApp. Personaliza tu perfil y empieza ofrecer tus servicios.",
         }),

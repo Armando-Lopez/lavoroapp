@@ -9,6 +9,7 @@ import ProfilePhoto from "./components/ProfilePhoto";
 import BasicInfo from "./components/BasicInfo";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
+import PageNotFound from "../notfound/PageNotFound";
 
 //css
 import "./css/workerprofile.css";
@@ -53,8 +54,6 @@ const WorkerProfile = () => {
   };
 
   if (worker && loaded && found) {
-    console.log(worker);
-
     return (
       <section>
         <Navbar />
@@ -75,11 +74,7 @@ const WorkerProfile = () => {
   } else if (!worker && found) {
     return <Loader />;
   } else if (!found) {
-    return (
-      <h1>
-        Ups! <br /> Usuario no encontrado
-      </h1>
-    );
+    return <PageNotFound />;
   }
 };
 

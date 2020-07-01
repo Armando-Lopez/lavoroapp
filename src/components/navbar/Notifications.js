@@ -53,7 +53,6 @@ const Notifications = ({ uid }) => {
       db.collection("notifications").doc(uid).update({
         notifications: notifications,
       });
-      console.log(notifications);
     }
     window.location.href = noti.link
       ? noti.link
