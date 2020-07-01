@@ -16,14 +16,14 @@
   font-family: cursive;
   font-size: 10em !important;
 }
-.logo {
+.logo-nf {
   /* align-self: flex-end; */
   width: 100px;
   height: 100px;
   animation: animatelogo 10s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
 }
 
-.text {
+.text-nf {
   font-size: 2em;
 }
 .back {
