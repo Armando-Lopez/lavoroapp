@@ -4,17 +4,30 @@ import photo_default from "../../../photo_default.png";
 
 const WorkerCard = ({ id, first_name, last_name, photo, services }) => {
   return (
-    <li className="collection-item avatar card-panel">
-      <Link to={`workerprofile/${id}`}>
+    <Link to={`workerprofile/${id}`}>
+      <li className="collection-item avatar card-panel hoverable">
         <img
           src={photo ? photo : photo_default}
           alt={first_name}
-          className="circle"
+          className="circle materialboxed"
+          style={{ width: "70px", height: "70px" }}
         />
-        <span className="title">{first_name + " " + last_name}</span>
-        <p>{services.map((service) => service + ". ")}</p>
-      </Link>
-    </li>
+        <div style={{ marginLeft: "25px", marginBottom: "10px" }}>
+          <span className="title black-text">
+            {first_name + " " + last_name}
+          </span>
+          <p>
+            {services.map((service, index) => {
+              return (
+                <span key={index} className="chip">
+                  {service}
+                </span>
+              );
+            })}
+          </p>
+        </div>
+      </li>
+    </Link>
   );
 };
 
