@@ -9,8 +9,8 @@
   width: 100%;
 }
 
-.login-section .content {
-  position: absolute;
+.login-section .content-login {
+  position: relative;
 }
 
 .login-section .form-login {
