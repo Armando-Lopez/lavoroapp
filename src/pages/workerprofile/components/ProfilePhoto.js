@@ -54,12 +54,12 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
   return (
     <>
       {loading && <Loader />}
-      <div className="row section">
-        <div className="photo-container col s12 center-align">
+      <div className="col s12 center-align section">
+        <div className="photo-container">
           <img
             id="photo"
             src={photo ? photo : default_photo}
-            className="responsive-img circle"
+            className="responsive-img card z-depth-3"
             alt="userphoto"
           />
           {IsOwner && (

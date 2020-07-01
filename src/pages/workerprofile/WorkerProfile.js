@@ -5,6 +5,7 @@ import db from "../../services/firebase/dbconfig";
 import Loader from "../../components/loader/Loader";
 
 //components
+import Navbar from "../../components/navbar/Navbar";
 import ProfilePhoto from "./components/ProfilePhoto";
 import BasicInfo from "./components/BasicInfo";
 import Services from "./components/Services";
@@ -13,7 +14,6 @@ import PageNotFound from "../notfound/PageNotFound";
 
 //css
 import "./css/workerprofile.css";
-import Navbar from "../../components/navbar/Navbar";
 
 const WorkerProfile = () => {
   const { uid } = useParams();
@@ -24,19 +24,6 @@ const WorkerProfile = () => {
   const [IsOwner, setOwner] = useState(false);
 
   useEffect(() => {
-    getWorker();
-
-    //verifica si el visitante es el dueño del perfil
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        if (user.uid === uid) {
-          setOwner(true);
-        }
-      }
-    });
-  }, []);
-
-  const getWorker = () => {
     db.collection("workers")
       .doc(uid)
       .get()
@@ -51,22 +38,34 @@ const WorkerProfile = () => {
       .catch(function (error) {
         console.log("Error getting document:", error);
       });
-  };
+  }, []);
+
+  useEffect(() => {
+    //verifica si el visitante es el dueño del perfil
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (user.uid === uid) {
+          setOwner(true);
+        }
+      }
+    });
+  }, []);
 
   if (worker && loaded && found) {
     return (
       <section>
         <Navbar />
+        <div className="row">
+          <ProfilePhoto uid={uid} photo={worker.photo} IsOwner={IsOwner} />
 
-        <ProfilePhoto uid={uid} photo={worker.photo} IsOwner={IsOwner} />
+          <BasicInfo uid={uid} worker={worker} IsOwner={IsOwner} />
 
-        <BasicInfo uid={uid} worker={worker} IsOwner={IsOwner} />
-
-        <Services
-          uid={uid}
-          photos_services={worker.photos_services}
-          isOwner={IsOwner}
-        />
+          <Services
+            uid={uid}
+            photos_services={worker.photos_services}
+            isOwner={IsOwner}
+          />
+        </div>
 
         {!IsOwner && <Contact uid={uid} />}
       </section>

@@ -1,12 +1,13 @@
 /* FOTO */
 .photo-container {
-  position: relative;
+  /* position: relative; */
   /* height: 200px; */
   /* width: 200px; */
 }
 .photo-container img {
   /* position: relative; */
   max-height: 200px;
+  border-radius: 10px;
 }
 .btn-cambiar-foto {
   position: absolute;
@@ -19,6 +20,8 @@
 }
 
 /* FIN FOTO */
+
+/* INFO */
 .basic-info {
   position: relative;
 }
@@ -27,8 +30,9 @@
   top: 10px;
   right: 3px;
 }
+/* FIN INFO */
 
-/* INFO */
+/* fotos servicios */
 .serices-preview {
   display: flex;
   flex-wrap: wrap;
@@ -50,4 +54,4 @@
   height: fit-content;
   max-width: 350px;
 }
-/* FIN INFO */
+/* fin fotos servicios */
