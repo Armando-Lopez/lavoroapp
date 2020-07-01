@@ -8,6 +8,7 @@ import Login from "./pages/login/Login";
 import WorkerProfile from "./pages/workerprofile/WorkerProfile";
 import Hire from "./pages/hire/hire";
 import Notification from "./pages/notification/Notification";
+import PageNotFound from "./pages/notfound/PageNotFound";
 
 const App = () => {
   return (
@@ -38,6 +39,10 @@ const App = () => {
           path="/notificationBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9VbshdBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9Vbshd/:data?"
         >
           <Notification />
+        </Route>
+
+        <Route exact path="*">
+          <PageNotFound />
         </Route>
       </Switch>
     </Router>
