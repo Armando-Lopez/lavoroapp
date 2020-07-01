@@ -53,7 +53,7 @@ const Login = () => {
         <h1 className="white-text">Lavoro App</h1>
         <div className="row container">
           <form className="col s12 white container form-login">
-            <h2 className="blue-text">Iniciar sesion</h2>
+            <h4 className="blue-text">Inicia sesión</h4>
             <div className="divider blue"></div>
             <div className="row">
               <div className="input-field col s12">
