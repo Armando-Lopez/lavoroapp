@@ -1,6 +1,6 @@
 /* FOTO */
 .photo-container {
-  /* position: relative; */
+  position: relative;
   /* height: 200px; */
   /* width: 200px; */
 }
@@ -10,10 +10,10 @@
   border-radius: 10px;
 }
 .btn-cambiar-foto {
-  position: absolute;
+  /* position: absolute;
   left: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 10; */
 }
 .btn-cambiar-foto i {
   font-size: 30px;

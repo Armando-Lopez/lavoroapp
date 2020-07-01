@@ -55,7 +55,7 @@ const WorkerProfile = () => {
     return (
       <section>
         <Navbar />
-        <div className="row">
+        <div className="row center-align">
           <ProfilePhoto uid={uid} photo={worker.photo} IsOwner={IsOwner} />
 
           <BasicInfo uid={uid} worker={worker} IsOwner={IsOwner} />
