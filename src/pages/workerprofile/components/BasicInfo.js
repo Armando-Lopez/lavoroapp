@@ -7,38 +7,39 @@ const BasicInfo = ({ uid, worker, IsOwner }) => {
   //
 
   return (
-    <div className="col s12 basic-info">
+    <>
       <div>
+        {IsOwner && (
+          <>
+            <button
+              data-target="modal-form-info"
+              className="btn-floating blue accent-4 darken-4 modal-trigger right btn-edit-inf"
+            >
+              <i className="material-icons">edit</i>
+            </button>
+            <ModalEditInfo uid={uid} worker={worker} />
+          </>
+        )}
         <h4 className="name">{worker.first_name + " " + worker.last_name}</h4>
 
-        <p className="serices-preview">
+        <p className="flow-text">
           {worker.services.map((service, index) => (
-            <span key={index} className="chips">{`${service} `}</span>
+            <span
+              key={index}
+              className="chip blue accent-1 lighten-5 black-text"
+            >
+              {service}
+            </span>
           ))}
         </p>
 
-        {/* <br /> */}
-
-        <p className="description">
+        <p className="flow-text">
           {worker.description ? worker.description : "Sin descripción"}
         </p>
       </div>
 
-      {IsOwner && (
-        <>
-          <button
-            data-target="modal-form-info"
-            className="btn-floating blue modal-trigger btn-edit-info"
-          >
-            <i className="material-icons">edit</i>
-          </button>
-
-          <ModalEditInfo uid={uid} worker={worker} />
-        </>
-      )}
-
       <div className="divider"></div>
-    </div>
+    </>
   );
 };
 
@@ -94,7 +95,7 @@ const ModalEditInfo = ({ uid, worker }) => {
           <div className="row">
             <h5>Edita tu información básica</h5>
             <div className="input-field col s12 left-align">
-              <span>Aún no puedes editar tu nombre</span>
+              <h6>Aún no puedes editar tu nombre</h6>
               <input
                 disabled
                 defaultValue={worker.first_name + " " + worker.last_name}
@@ -105,9 +106,10 @@ const ModalEditInfo = ({ uid, worker }) => {
             </div>
 
             <div className="input-field col s12 left-align">
-              <span>
-                Añande los servicios que ofreces, cada uno separados por coma(,)
-              </span>
+              <h6>
+                ¿cuáles son tus habilidades? <br /> Agregalas separando cada una
+                por comas (,)
+              </h6>
               <textarea
                 name="services"
                 id="services"
@@ -116,15 +118,20 @@ const ModalEditInfo = ({ uid, worker }) => {
                 onChange={handleInputServices}
               ></textarea>
 
-              <ul className="serices-preview">
+              <p className="serices-preview">
                 {services.map((service, index) => (
-                  <li key={index} className="service-item">{`${service} `}</li>
+                  <span
+                    key={index}
+                    className="service-item chip blue accent-1 lighten-5 black-text"
+                  >{`${service} `}</span>
                 ))}
-              </ul>
+              </p>
             </div>
 
             <div className="input-field col s12 left-align">
-              <span>Añade una breve descripción de ti, y tus servicios</span>
+              <h6>
+                Añade una breve descripción de ti y los servicios que ofreces
+              </h6>
               <textarea
                 name="description"
                 id="description"

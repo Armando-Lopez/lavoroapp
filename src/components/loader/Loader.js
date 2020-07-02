@@ -5,7 +5,7 @@ import logo from "../../logo.png";
 import "./css/loader.css";
 
 const Loader = () => (
-  <div className="loader-container">
+  <div className="loader-container blue accent-1 lighten-1">
     <img src={logo} alt="cargando..." />
   </div>
 );

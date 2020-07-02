@@ -4,7 +4,7 @@ import "./css/pagenotfound.css";
 
 const PageNotFound = () => {
   return (
-    <section className="center-align page-not-found-content">
+    <section className="center-align page-not-found-content blue accent-1 lighten-1">
       <h1>¡oops!</h1>
       <div className="four-cero-four">
         <h1 className="blue-text text-darken-4 four">4</h1>

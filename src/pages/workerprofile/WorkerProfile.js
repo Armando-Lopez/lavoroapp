@@ -53,18 +53,38 @@ const WorkerProfile = () => {
 
   if (worker && loaded && found) {
     return (
-      <section>
+      <section className="blue accent-1" style={{ minHeight: "100vh" }}>
         <Navbar />
-        <div className="row center-align">
-          <ProfilePhoto uid={uid} photo={worker.photo} IsOwner={IsOwner} />
+        <div
+          className="row center-align blue accent-1 lighten-5"
+          style={{ marginBottom: "0" }}
+        >
+          <div
+            className="col s12 m10 offset-m1 white z-depth-5"
+            style={{ borderRadius: "5px", minHeight: "100vh" }}
+          >
+            <div className="row section">
+              <div className="col s12 m6 l4 offset-m3 center-align section">
+                <ProfilePhoto
+                  uid={uid}
+                  photo={worker.photo}
+                  IsOwner={IsOwner}
+                />
+              </div>
 
-          <BasicInfo uid={uid} worker={worker} IsOwner={IsOwner} />
+              <div className="col s12 l7 basic-info">
+                <BasicInfo uid={uid} worker={worker} IsOwner={IsOwner} />
+              </div>
 
-          <Services
-            uid={uid}
-            photos_services={worker.photos_services}
-            isOwner={IsOwner}
-          />
+              <div className="col s12">
+                <Services
+                  uid={uid}
+                  photos_services={worker.photos_services}
+                  isOwner={IsOwner}
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
         {!IsOwner && <Contact uid={uid} />}
