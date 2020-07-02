@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 import db from "../../../services/firebase/dbconfig";
 import default_photo from "../../../photo_default.png";
@@ -54,42 +54,40 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
   return (
     <>
       {loading && <Loader />}
-      <div className="col s12 m6 l4 offset-m3 offset-l4 center-align">
-        <div className="card" style={{ borderRadius: "20px" }}>
-          <div className="card-image">
-            <img
-              id="photo"
-              src={photo ? photo : default_photo}
-              className="responsive-img card z-depth-3 "
-              alt="userphoto"
-              style={{ maxHeight: "350px", borderRadius: "20px" }}
-            />
-            {IsOwner && (
-              <>
-                <button
-                  data-target="modal-change-photo"
-                  className="btn-floating halfway-fab modal-trigger blue accent-4 darken-2"
-                >
-                  <i className="material-icons">camera_alt</i>
-                </button>
-                <ModalChangePhoto
-                  handlefileChange={handlefileChange}
-                  handleSubmit={handleSubmit}
-                  cancel={cancel}
-                />
-              </>
-            )}
-          </div>
+      <div className="card" style={{ borderRadius: "20px" }}>
+        <div className="card-image">
+          <img
+            id="photo"
+            src={photo ? photo : default_photo}
+            className="responsive-img card z-depth-2 materialboxed"
+            alt="userphoto"
+            style={{ maxHeight: "350px", borderRadius: "20px" }}
+          />
+          {IsOwner && (
+            <>
+              <button
+                data-target="modal-change-photo"
+                className="btn-floating halfway-fab modal-trigger blue accent-4 darken-4"
+              >
+                <i className="material-icons">camera_alt</i>
+              </button>
+              <ModalChangePhoto
+                handlefileChange={handlefileChange}
+                handleSubmit={handleSubmit}
+                cancel={cancel}
+              />
+            </>
+          )}
         </div>
-
-        <div className="divider"></div>
       </div>
+
+      <div className="divider"></div>
     </>
   );
 };
 
 const ModalChangePhoto = ({ handlefileChange, handleSubmit, cancel }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     const elem = document.querySelector("#modal-change-photo");
     M.Modal.init(elem, { dismissible: false });
   }, []);
@@ -98,7 +96,7 @@ const ModalChangePhoto = ({ handlefileChange, handleSubmit, cancel }) => {
     <>
       <div id="modal-change-photo" className="modal modal-photo">
         <div className="modal-content">
-          <p>Selecciona tu nueva Foto</p>
+          <h6>Selecciona tu nueva Foto</h6>
 
           <form className="form-photo" onSubmit={handleSubmit} method="post">
             <div className="file-field input-field">
