@@ -17,71 +17,52 @@ const Navbar = () => {
     });
   }, []);
 
-  if (user) {
-    return (
-      <div className="navbar-fixed">
-        <nav className="blue accent-2">
-          <div className="nav-wrapper">
-            <ul id="nav-mobile">
-              <li className="left">
-                <a href="/">
-                  <img
-                    src={logo}
-                    className="responsive-img lef"
-                    width="50"
-                    alt="logo"
-                  />
-                </a>
-              </li>
+  return (
+    <div className="navbar-fixed">
+      <nav className="blue accent-3">
+        <div className="nav-wrapper">
+          <ul id="nav-mobile">
+            <li className="left">
+              <a href="/">
+                <img
+                  src={logo}
+                  className="responsive-img lef"
+                  width="50"
+                  alt="logo"
+                />
+              </a>
+            </li>
 
-              <li className="right">
-                <a href="#!" onClick={closeSession}>
-                  Cerrar sesión
-                </a>
-              </li>
+            {user ? (
+              <>
+                <li className="right">
+                  <a href="#!" onClick={closeSession}>
+                    Cerrar sesión
+                  </a>
+                </li>
 
-              <li className="right">
-                <Notifications uid={user.uid} />
-              </li>
+                <li className="right">
+                  <Notifications uid={user.uid} />
+                </li>
 
-              <li className="right">
-                <a href={`/workerprofile/${user.uid}`}>
-                  <span>Perfil</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    );
-  } else {
-    return (
-      <div className="navbar-fixed">
-        <nav className="blue accent-2">
-          <div className="nav-wrapper">
-            <ul id="nav-mobile">
-              <li className="left">
-                <a href="/">
-                  <img
-                    src={logo}
-                    className="responsive-img lef"
-                    width="50"
-                    alt="logo"
-                  />
-                </a>
-              </li>
-
+                <li className="right">
+                  <a href={`/workerprofile/${user.uid}`}>
+                    <span>Perfil</span>
+                  </a>
+                </li>
+              </>
+            ) : (
               <li className="right">
                 <a href="/login">
                   <span>Inicia sesión</span>
                 </a>
               </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    );
-  }
+            )}
+          </ul>
+        </div>
+      </nav>
+    </div>
+  );
 };
 
 export default Navbar;

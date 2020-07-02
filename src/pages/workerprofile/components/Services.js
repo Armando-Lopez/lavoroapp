@@ -6,28 +6,55 @@ import Loader from "../../../components/loader/Loader";
 
 const Services = ({ uid, photos_services, isOwner }) => {
   return (
-    <div className="row">
+    <>
       {isOwner && (
         <>
-          <div className="col s12">
-            <button
-              data-target="modal-upload-photo-service"
-              className="btn-floating modal-trigger blue accent-2"
-            >
-              <i className="material-icons">add</i>
-            </button>
-          </div>
+          <button
+            data-target="modal-upload-photo-service"
+            className="btn-floating modal-trigger blue accent-4"
+          >
+            <i className="material-icons">add</i>
+          </button>
           <ModalUploadPhotoService uid={uid} />
         </>
       )}
 
-      <div className="col s12 photos-services">
-        <ServicesPhotos photos_services={photos_services} isOwner={isOwner} />
-      </div>
-    </div>
+      <ServicesPhotos photos_services={photos_services} isOwner={isOwner} />
+    </>
   );
 };
 
+const ServicesPhotos = ({ photos_services, isOwner }) => {
+  const message = isOwner
+    ? "No has subido ninguna foto. Presiona el botón de agregar y muestranos lo que haces."
+    : "Este usuario no ha subido fotos de sus servicios";
+
+  useEffect(() => {
+    const elem = document.querySelectorAll(".materialboxed");
+    M.Materialbox.init(elem);
+  }, []);
+
+  return (
+    <>
+      <h4 className="center-align">
+        {photos_services.length > 0 ? "Servicios" : message}
+      </h4>
+      <div className="services-cnt">
+        {photos_services.map((item, index) => {
+          return (
+            <div className="card center-align z-depth-2 service" key={index}>
+              <img
+                src={item}
+                className="responsive-img center materialboxed"
+                alt="servicio"
+              />
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+};
 const ModalUploadPhotoService = ({ uid }) => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -113,38 +140,6 @@ const ModalUploadPhotoService = ({ uid }) => {
             </div>
           </form>
         </div>
-      </div>
-    </>
-  );
-};
-
-const ServicesPhotos = ({ photos_services, isOwner }) => {
-  const message = isOwner
-    ? "No has subido ninguna foto. Presiona el botón de agregar y muestranos lo que haces."
-    : "Este usuario no ha subido fotos de sus servicios";
-
-  useEffect(() => {
-    const elem = document.querySelectorAll(".materialboxed");
-    M.Materialbox.init(elem);
-  }, []);
-
-  return (
-    <>
-      <h4 className="center-align">
-        {photos_services.length > 0 ? "Servicios" : message}
-      </h4>
-      <div className="services-cnt">
-        {photos_services.map((item, index) => {
-          return (
-            <div className="card center-align z-depth-2 service" key={index}>
-              <img
-                src={item}
-                className="responsive-img center materialboxed"
-                alt="servicio"
-              />
-            </div>
-          );
-        })}
       </div>
     </>
   );

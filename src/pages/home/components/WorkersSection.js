@@ -32,24 +32,31 @@ const WorkersSection = () => {
 
   if (workers && loaded) {
     return (
-      <ul className="collection workers-list">
-        {workers.map((worker, index) => {
-          return (
-            <WorkerCard
-              key={index}
-              id={worker.id}
-              first_name={worker.first_name}
-              last_name={worker.last_name}
-              photo={worker.photo}
-              services={worker.services}
-            />
-          );
-        })}
-      </ul>
+      <div
+        className="row blue accent-1 lighten-5"
+        style={{ minHeight: "100vh", margin: "0" }}
+      >
+        <div className="col s12 m10 offset-m1 l10 offset-l1">
+          <ul className="collection" style={{ border: "none" }}>
+            {workers.map((worker, index) => {
+              return (
+                <WorkerCard
+                  key={index}
+                  id={worker.id}
+                  first_name={worker.first_name}
+                  last_name={worker.last_name}
+                  photo={worker.photo}
+                  services={worker.services}
+                />
+              );
+            })}
+          </ul>
+        </div>
+      </div>
     );
   } else {
     return (
-      <section className=" section center-align">
+      <section className="section center-align">
         <Loader />
       </section>
     );
