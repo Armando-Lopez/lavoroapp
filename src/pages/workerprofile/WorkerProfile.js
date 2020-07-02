@@ -56,7 +56,7 @@ const WorkerProfile = () => {
       <section className="blue accent-1" style={{ minHeight: "100vh" }}>
         <Navbar />
         <div
-          className="row center-align blue accent-1 lighten-5"
+          className="row center-align light-blue lighten-5"
           style={{ marginBottom: "0" }}
         >
           <div

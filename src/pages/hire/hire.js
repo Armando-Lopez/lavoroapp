@@ -17,7 +17,9 @@ const Hire = () => {
       .update({
         notifications: firebase.firestore.FieldValue.arrayUnion({
           seen: false,
-          title: "Felicidads. Alguien quiere contar con tus servicios",
+          title: `¡Felicidades!. ${
+            data.first_name + " " + data.last_name
+          } queire contar con tus servicios.`,
           body: data,
         }),
         wasOpen: false,

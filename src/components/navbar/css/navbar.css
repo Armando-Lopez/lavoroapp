@@ -1,11 +1,8 @@
-nav {
-  overflow-y: hidden;
-}
 #notifications {
   padding: 3px;
   width: fit-content !important;
   max-height: 400px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .shake-bell {

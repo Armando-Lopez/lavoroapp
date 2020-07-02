@@ -12,7 +12,7 @@ const WorkerSignupSection = () => {
     <section className="section signup-section">
       <div className="bg"></div>
       <div className="row container content">
-        <div className="col s12 center-align">
+        <div className="col s12 m8 offset-m2 center-align">
           <Intro />
           <div className="row">
             <SignupForm />

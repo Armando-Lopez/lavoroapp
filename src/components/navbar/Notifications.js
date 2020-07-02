@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import db from "../../services/firebase/dbconfig";
 import M from "materialize-css";
+import MondalNotification from "../modalnotification/ModalNotifcation";
+import ModalNotification from "../modalnotification/ModalNotifcation";
 
 const Notifications = ({ uid }) => {
   const [notifications, setNotifications] = useState([]);
   const [wasOpen, setOpen] = useState(true);
   const [Unreads, setUnreads] = useState(0);
+  const [notificationData, setNotificationData] = useState(null);
 
   useEffect(() => {
     const notiRef = db.collection("notifications").doc(uid);
@@ -54,25 +57,29 @@ const Notifications = ({ uid }) => {
           notifications: notifications,
         })
         .then(() => {
-          window.location.href = noti.link
-            ? noti.link
-            : `/notificationBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9VbshdBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9Vbshd/${JSON.stringify(
-                noti.body
-              )}`;
+          if (noti.link) {
+            window.location.href = noti.link;
+          } else {
+            setNotificationData(noti);
+          }
         });
     }
-    window.location.href = noti.link
-      ? noti.link
-      : `/notificationBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9VbshdBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9Vbshd/${JSON.stringify(
-          noti.body
-        )}`;
+    if (noti.link) {
+      window.location.href = noti.link;
+    } else {
+      setNotificationData(noti);
+    }
+  };
+
+  const closeModal = () => {
+    setNotificationData(null);
   };
 
   return (
     <>
       {Unreads.length > 0 && (
         <span
-          className="new badge blue accent-4 z-depth-3"
+          className="new badge blue darken-4 z-depth-3"
           data-badge-caption=""
           style={{ fontWeight: "800" }}
         >
@@ -104,7 +111,7 @@ const Notifications = ({ uid }) => {
                 <a className={noti.seen ? "blue-text" : "white-text"}>
                   {noti.title}
                 </a>
-                <div className="divider">ffdf</div>
+                <div className="divider"></div>
               </li>
             );
           })
@@ -116,6 +123,12 @@ const Notifications = ({ uid }) => {
           </li>
         )}
       </ul>
+      {notificationData && (
+        <ModalNotification
+          notification={notificationData}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 };
