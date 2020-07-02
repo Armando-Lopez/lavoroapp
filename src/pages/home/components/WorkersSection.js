@@ -33,7 +33,7 @@ const WorkersSection = () => {
   if (workers && loaded) {
     return (
       <div
-        className="row blue accent-1 lighten-5"
+        className="row light-blue lighten-5"
         style={{ minHeight: "100vh", margin: "0" }}
       >
         <div className="col s12 m10 offset-m1 l10 offset-l1">

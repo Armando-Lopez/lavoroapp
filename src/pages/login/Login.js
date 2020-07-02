@@ -48,11 +48,11 @@ const Login = () => {
   return (
     <section className="login-section center-align">
       <div className="bg blue"></div>
-      <div className="content-login">
-        <img src={logo} alt="logo" />
+      <div className="content-login section">
+        <img src={logo} alt="logo" width="100" />
         <h1 className="white-text">Lavoro App</h1>
         <div className="row container">
-          <form className="col s12 white container form-login">
+          <form className="col s12 m8 offset-m2 white container form-login">
             <h4 className="blue-text">Inicia sesión</h4>
             <div className="divider blue"></div>
             <div className="row">
