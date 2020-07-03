@@ -9,8 +9,12 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
   //
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [photoPreview, setPreview] = useState(photo);
 
-  const handlefileChange = (e) => setFile(e.target.files[0]);
+  const handlefileChange = (e) => {
+    setFile(e.target.files[0]);
+    setPreview(URL.createObjectURL(e.target.files[0]));
+  };
 
   //sube la foto
   const handleSubmit = async (e) => {
@@ -26,48 +30,43 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
         const fileURL = await fileRef.getDownloadURL();
 
         if (fileURL) {
-          updatePhoto(fileURL);
+          const washingtonRef = db.collection("workers").doc(uid);
+          await washingtonRef.update({ photo: fileURL });
+          M.toast({ html: "Foto actualizada" });
+          setLoading(false);
+          document.querySelector(".form-photo").reset();
         }
       } catch (error) {
         console.log(error);
-        M.toast({ html: "Ha ocurrido un error" });
+        M.toast({ html: "Ha ocurrido un error al actualizar la foto" });
+        setLoading(false);
       }
     }
   };
 
-  //actualiza fato del trabajador
-  const updatePhoto = async (fileURL) => {
-    const washingtonRef = db.collection("workers").doc(uid);
-    try {
-      await washingtonRef.update({ photo: fileURL });
-      M.toast({ html: "Foto actualizada" });
-      setLoading(false);
-      document.getElementById("photo").src = fileURL;
-    } catch (error) {
-      M.toast({ html: "Ocurrió un error" });
-      console.error("Error updating document: ", error);
-    }
+  const cancel = () => {
+    setPreview(photo);
+    document.querySelector(".form-photo").reset();
   };
-
-  const cancel = () => document.querySelector(".form-photo").reset();
 
   return (
     <>
       {loading && <Loader />}
-      <div className="card" style={{ borderRadius: "20px" }}>
-        <div className="card-image">
+      <div>
+        <div className="">
           <img
             id="photo"
             src={photo ? photo : default_photo}
-            className="responsive-img card z-depth-2 materialboxed"
+            className="responsive-img circle border-blue"
             alt="userphoto"
-            style={{ maxHeight: "350px", borderRadius: "20px" }}
+            width="150"
+            style={{ borderWidth: "2px" }}
           />
           {IsOwner && (
             <>
               <button
                 data-target="modal-change-photo"
-                className="btn-floating halfway-fab modal-trigger blue accent-4 darken-4"
+                className="btn-floating modal-trigger blue accent-4 darken-4"
               >
                 <i className="material-icons">camera_alt</i>
               </button>
@@ -75,6 +74,7 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
                 handlefileChange={handlefileChange}
                 handleSubmit={handleSubmit}
                 cancel={cancel}
+                photoPreview={photoPreview}
               />
             </>
           )}
@@ -86,7 +86,12 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
   );
 };
 
-const ModalChangePhoto = ({ handlefileChange, handleSubmit, cancel }) => {
+const ModalChangePhoto = ({
+  handlefileChange,
+  handleSubmit,
+  cancel,
+  photoPreview,
+}) => {
   useEffect(() => {
     const elem = document.querySelector("#modal-change-photo");
     M.Modal.init(elem, { dismissible: false });
@@ -97,7 +102,7 @@ const ModalChangePhoto = ({ handlefileChange, handleSubmit, cancel }) => {
       <div id="modal-change-photo" className="modal modal-photo">
         <div className="modal-content">
           <h6>Selecciona tu nueva Foto</h6>
-
+          <img className="responsive-img circle" src={photoPreview} />
           <form className="form-photo" onSubmit={handleSubmit} method="post">
             <div className="file-field input-field">
               <div className="btn blue">

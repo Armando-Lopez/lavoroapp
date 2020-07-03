@@ -24,8 +24,9 @@ const WorkerProfile = () => {
   const [IsOwner, setOwner] = useState(false);
 
   useEffect(() => {
-    db.collection("workers")
-      .doc(uid)
+    const workerRef = db.collection("workers").doc(uid);
+
+    workerRef
       .get()
       .then(function (doc) {
         if (doc.exists) {
@@ -38,6 +39,11 @@ const WorkerProfile = () => {
       .catch(function (error) {
         console.log("Error getting document:", error);
       });
+
+    //lee cambios en tiempo real
+    workerRef.onSnapshot((snap) => {
+      setWorker(snap.data());
+    });
   }, []);
 
   useEffect(() => {
