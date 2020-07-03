@@ -83,12 +83,17 @@ const ModalUploadPhotoService = ({ uid }) => {
 
         if (fileUrl) {
           const washingtonRef = db.collection("workers").doc(uid);
-          washingtonRef.update({
-            photos_services: firebase.firestore.FieldValue.arrayUnion(fileUrl),
-          });
-          M.toast({ html: "Foto añadida con exito!" });
-          setLoading(false);
-          window.location.reload();
+          washingtonRef
+            .update({
+              photos_services: firebase.firestore.FieldValue.arrayUnion(
+                fileUrl
+              ),
+            })
+            .then(() => {
+              M.toast({ html: "Foto añadida con exito!" });
+              setLoading(false);
+              window.location.reload();
+            });
         }
       } catch (error) {
         setLoading(false);
