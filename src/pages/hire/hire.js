@@ -12,17 +12,12 @@ const Hire = () => {
   const { register, errors, handleSubmit } = useForm();
 
   const onsubmit = (data) => {
-    db.collection("notifications")
-      .doc(uid)
-      .update({
-        notifications: firebase.firestore.FieldValue.arrayUnion({
-          seen: false,
-          title: `¡Felicidades!. ${
-            data.first_name + " " + data.last_name
-          } queire contar con tus servicios.`,
-          body: data,
-        }),
-        wasOpen: false,
+    db.collection("hirings")
+      .add({
+        to: uid,
+        seen: false,
+        title: `Solicitud de ${data.first_name + " " + data.last_name}`,
+        body: data,
       })
       .then((res) => {
         M.toast({
@@ -35,7 +30,10 @@ const Hire = () => {
         console.log(error);
         M.toast({
           html:
-            "Ha ocurrido un error al enviar la solicitud. Intentalo más tarded",
+            "Ha ocurrido un error al enviar la solicitud. Intentalo más tarde",
+        });
+        M.toast({
+          html: error,
         });
       });
   };
