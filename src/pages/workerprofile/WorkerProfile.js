@@ -42,7 +42,9 @@ const WorkerProfile = () => {
 
     //lee cambios en tiempo real
     workerRef.onSnapshot((snap) => {
-      setWorker(snap.data());
+      if (snap.data()) {
+        setWorker(snap.data());
+      }
     });
   }, []);
 
@@ -100,6 +102,8 @@ const WorkerProfile = () => {
     return <Loader />;
   } else if (!found) {
     return <PageNotFound />;
+  } else {
+    return null;
   }
 };
 

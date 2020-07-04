@@ -53,32 +53,30 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
     <>
       {loading && <Loader />}
       <div>
-        <div className="">
-          <img
-            id="photo"
-            src={photo ? photo : default_photo}
-            className="responsive-img circle border-blue"
-            alt="userphoto"
-            width="150"
-            style={{ borderWidth: "2px" }}
-          />
-          {IsOwner && (
-            <>
-              <button
-                data-target="modal-change-photo"
-                className="btn-floating modal-trigger blue accent-4 darken-4"
-              >
-                <i className="material-icons">camera_alt</i>
-              </button>
-              <ModalChangePhoto
-                handlefileChange={handlefileChange}
-                handleSubmit={handleSubmit}
-                cancel={cancel}
-                photoPreview={photoPreview}
-              />
-            </>
-          )}
-        </div>
+        <img
+          id="photo"
+          src={photo ? photo : default_photo}
+          className="responsive-img circle border z-depth-1-half"
+          alt="userphoto"
+          width="170"
+          style={{ border: "0px solid blue" }}
+        />
+        {IsOwner && (
+          <>
+            <button
+              data-target="modal-change-photo"
+              className="btn-floating modal-trigger blue accent-4 darken-4"
+            >
+              <i className="material-icons">camera_alt</i>
+            </button>
+            <ModalChangePhoto
+              handlefileChange={handlefileChange}
+              handleSubmit={handleSubmit}
+              cancel={cancel}
+              photoPreview={photoPreview}
+            />
+          </>
+        )}
       </div>
 
       <div className="divider"></div>
