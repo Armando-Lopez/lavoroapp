@@ -1,67 +1,40 @@
-import React, { useEffect, useState } from "react";
-import firebase from "firebase";
-import Notifications from "./Notifications";
-import closeSession from "./closeSession";
+import React, { useEffect } from "react";
 import logo from "../../logo.png";
+import M from "materialize-css";
+import Sidenav from "./Sidenav";
 //css
 import "./css/navbar.css";
 
 const Navbar = () => {
-  const [user, setUser] = useState(undefined);
-
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      }
-    });
+    const elem = document.querySelectorAll(".sidenav");
+    M.Sidenav.init(elem);
   }, []);
 
   return (
-    <div className="navbar-fixed">
-      <nav className="blue accent-3">
-        <div className="nav-wrapper">
-          <ul id="nav-mobile">
-            <li className="left">
-              <a href="/">
-                <img
-                  src={logo}
-                  className="responsive-img lef"
-                  width="50"
-                  alt="logo"
-                />
-              </a>
-            </li>
+    <>
+      <div className="navbar-fixed">
+        <nav className="blue-grey lighten-5 z-depth-3 row">
+          <div className="nav-wrapper col s12 m10 offset-m1">
+            <a href="/" className="brand-logo center">
+              <img src={logo} width="50" alt="lavoroApp logo" />
+            </a>
 
-            {user ? (
-              <>
-                <li className="right">
-                  <a href="#!" onClick={closeSession}>
-                    Cerrar sesión
-                  </a>
-                </li>
+            <a
+              href="#!"
+              data-target="sidenav"
+              className="sidenav-trigger blue-text text-darken-3 show-on-medium-and-up"
+            >
+              <i className="material-icons" style={{ fontSize: "2em" }}>
+                menu
+              </i>
+            </a>
+          </div>
+        </nav>
+      </div>
 
-                <li className="right">
-                  <Notifications uid={user.uid} />
-                </li>
-
-                <li className="right">
-                  <a href={`/workerprofile/${user.uid}`}>
-                    <span>Perfil</span>
-                  </a>
-                </li>
-              </>
-            ) : (
-              <li className="right">
-                <a href="/login">
-                  <span>Inicia sesión</span>
-                </a>
-              </li>
-            )}
-          </ul>
-        </div>
-      </nav>
-    </div>
+      <Sidenav />
+    </>
   );
 };
 
