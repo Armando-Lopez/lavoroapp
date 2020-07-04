@@ -9,7 +9,7 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
   //
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [photoPreview, setPreview] = useState(photo);
+  const [photoPreview, setPreview] = useState(null);
 
   const handlefileChange = (e) => {
     setFile(e.target.files[0]);
@@ -34,7 +34,7 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
           await washingtonRef.update({ photo: fileURL });
           M.toast({ html: "Foto actualizada" });
           setLoading(false);
-          document.querySelector(".form-photo").reset();
+          cancel();
         }
       } catch (error) {
         console.log(error);
@@ -45,7 +45,6 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
   };
 
   const cancel = () => {
-    setPreview(photo);
     document.querySelector(".form-photo").reset();
   };
 
@@ -56,9 +55,9 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
         <img
           id="photo"
           src={photo ? photo : default_photo}
-          className="responsive-img circle border z-depth-1-half"
+          className="responsive-img circle border z-depth-2"
           alt="userphoto"
-          width="170"
+          width="200"
           style={{ border: "0px solid blue" }}
         />
         {IsOwner && (
@@ -99,7 +98,9 @@ const ModalChangePhoto = ({
     <>
       <div id="modal-change-photo" className="modal modal-photo">
         <div className="modal-content">
-          <h6>Selecciona tu nueva Foto</h6>
+          <h5 className="blue-grey-text text-darken-2">
+            Selecciona tu nueva Foto
+          </h5>
           <img className="responsive-img circle" src={photoPreview} />
           <form className="form-photo" onSubmit={handleSubmit} method="post">
             <div className="file-field input-field">

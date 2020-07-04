@@ -36,7 +36,7 @@ const ServicesPhotos = ({ photos_services, isOwner }) => {
 
   return (
     <>
-      <h4 className="center-align">
+      <h4 className="center-align blue-grey-text text-darken-2">
         {photos_services.length > 0 ? "Servicios" : message}
       </h4>
       <div className="services-cnt">
