@@ -20,8 +20,8 @@ const WorkersSection = () => {
           photo: data.photo,
           services: data.services,
         });
-        setWorkers(worker);
       });
+      setWorkers(worker);
       setLoaded(true);
     });
   };
@@ -37,17 +37,19 @@ const WorkersSection = () => {
         style={{ minHeight: "100vh", margin: "0" }}
       >
         <div className="col s12 m10 offset-m1 l10 offset-l1">
-          <ul className="collection" style={{ border: "none" }}>
+          <ul className="collection">
             {workers.map((worker, index) => {
               return (
-                <WorkerCard
-                  key={index}
-                  id={worker.id}
-                  first_name={worker.first_name}
-                  last_name={worker.last_name}
-                  photo={worker.photo}
-                  services={worker.services}
-                />
+                <React.Fragment key={index}>
+                  <WorkerCard
+                    id={worker.id}
+                    first_name={worker.first_name}
+                    last_name={worker.last_name}
+                    photo={worker.photo}
+                    services={worker.services}
+                  />
+                  <div className="divider"></div>
+                </React.Fragment>
               );
             })}
           </ul>

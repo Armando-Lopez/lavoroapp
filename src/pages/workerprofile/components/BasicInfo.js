@@ -20,20 +20,22 @@ const BasicInfo = ({ uid, worker, IsOwner }) => {
             <ModalEditInfo uid={uid} worker={worker} />
           </>
         )}
-        <h4 className="name">{worker.first_name + " " + worker.last_name}</h4>
+        <h4 className="blue-grey-text text-darken-2">
+          {worker.first_name + " " + worker.last_name}
+        </h4>
 
         <p className="flow-text">
           {worker.services.map((service, index) => (
             <span
               key={index}
-              className="chip blue accent-1 lighten-5 black-text"
+              className="chip blue lighten-5 blue-grey-text text-darken-3"
             >
               {service}
             </span>
           ))}
         </p>
 
-        <p className="flow-text">
+        <p className="flow-text blue-grey-text text-darken-3">
           {worker.description ? worker.description : "Sin descripción"}
         </p>
       </div>
@@ -58,6 +60,8 @@ const ModalEditInfo = ({ uid, worker }) => {
       inDuration: 100,
       outDuration: 100,
     });
+
+    M.textareaAutoResize(document.querySelector(".materialize-textarea"));
   }, []);
 
   const handleInputServices = (ev) => {
@@ -93,9 +97,13 @@ const ModalEditInfo = ({ uid, worker }) => {
       <div id="modal-form-info" className="modal">
         <div className="modal-content">
           <div className="row">
-            <h5>Edita tu información básica</h5>
+            <h5 className="blue-grey-text text-darken-2">
+              Edita tu información básica
+            </h5>
             <div className="input-field col s12 left-align">
-              <h6>Aún no puedes editar tu nombre</h6>
+              <p className="blue-grey-text text-darken-2">
+                Aún no puedes editar tu nombre
+              </p>
               <input
                 disabled
                 defaultValue={worker.first_name + " " + worker.last_name}
@@ -106,15 +114,15 @@ const ModalEditInfo = ({ uid, worker }) => {
             </div>
 
             <div className="input-field col s12 left-align">
-              <h6>
+              <p className="blue-grey-text text-darken-2">
                 ¿cuáles son tus habilidades? <br /> Agregalas separando cada una
                 por comas (,)
-              </h6>
+              </p>
               <textarea
                 name="services"
                 id="services"
-                className="materialize-textarea"
-                defaultValue={services.map((service) => `${service}`)}
+                className="materialize-textarea blue-grey-text text-darken-2"
+                defaultValue={services.map((service) => ` ${service}`)}
                 onChange={handleInputServices}
               ></textarea>
 
@@ -122,35 +130,39 @@ const ModalEditInfo = ({ uid, worker }) => {
                 {services.map((service, index) => (
                   <span
                     key={index}
-                    className="service-item chip blue accent-1 lighten-5 black-text"
+                    className="chip blue lighten-5 blue-grey-text text-darken-3"
                   >{`${service} `}</span>
                 ))}
               </p>
             </div>
 
             <div className="input-field col s12 left-align">
-              <h6>
+              <p className="blue-grey-text text-darken-2">
                 Añade una breve descripción de ti y los servicios que ofreces
-              </h6>
+              </p>
+
               <textarea
                 name="description"
                 id="description"
-                className="materialize-textarea"
+                className="materialize-textarea blue-grey-text text-darken-3"
                 defaultValue={description}
                 onChange={handleInputDescription}
               ></textarea>
             </div>
           </div>
 
-          <button
-            className="btn modal-close green waves-effect waves-light white-text"
-            onClick={save}
-          >
-            Guardar
-          </button>
-          <button className="btn modal-close red waves-effect waves-light white-text">
-            Cancelar
-          </button>
+          <div className="modal-footer">
+            <button className="btn-floating modal-close red accent-2 waves-effect waves-light white-text left">
+              <i className="material-icons">cancel</i>
+            </button>
+
+            <button
+              className="btn-floating modal-close green accent-3 waves-effect waves-light blue-grey-text text-darken-4"
+              onClick={save}
+            >
+              <i className="material-icons">check</i>
+            </button>
+          </div>
         </div>
       </div>
     </>
