@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import db from "../../services/firebase/dbconfig";
 import M from "materialize-css";
-import MondalNotification from "../modalnotification/ModalNotifcation";
 import ModalNotification from "../modalnotification/ModalNotifcation";
 
 const Notifications = ({ uid }) => {

@@ -7,7 +7,7 @@ import Signup from "./pages/signup/Signup";
 import Login from "./pages/login/Login";
 import WorkerProfile from "./pages/workerprofile/WorkerProfile";
 import Hire from "./pages/hire/hire";
-import Notification from "./pages/notification/Notification";
+import Hirings from "./pages/hirings/Hirings";
 import PageNotFound from "./pages/notfound/PageNotFound";
 
 const App = () => {
@@ -34,11 +34,8 @@ const App = () => {
           <Hire />
         </Route>
 
-        <Route
-          exact
-          path="/notificationBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9VbshdBgha63hdRxbcu93bcAwikHlovPsnrDd75026CnebdbBnejsoKKkaqLepwdzxs45d9Vbshd/:data?"
-        >
-          <Notification />
+        <Route exact path="/hirings/:uid?">
+          <Hirings />
         </Route>
 
         <Route exact path="*">
