@@ -124,7 +124,10 @@ const RequetsList = ({ request, markAsSeen, onDelete }) => {
 
       <div className="collapsible-body blue lighten-4">
         <ul className="collection">
-          <li className="collection-item">{description}</li>
+          <li className="collection-item">
+            <i className="material-icons">description </i>
+            {description}
+          </li>
 
           <li className="collection-item">
             <i className="material-icons">person </i>

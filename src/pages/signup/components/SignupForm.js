@@ -59,8 +59,10 @@ const SignupForm = () => {
         birthday: data.birthday.trim(),
         photo: "",
         description: "",
+        created_at: firebase.firestore.FieldValue.serverTimestamp(),
         services: [],
         photos_services: [],
+        unseen_hiring_requests: 0,
       });
       autiLogin(data); //llama a la funcion de autologgear al usuario
     } catch (error) {

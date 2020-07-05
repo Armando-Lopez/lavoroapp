@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../logo.png";
 import { Link, Redirect } from "react-router-dom";
 import firebase from "firebase";
@@ -9,6 +9,14 @@ import "./css/login.css";
 const Login = () => {
   const [hasSignin, SetSignin] = useState(false);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        SetSignin(true);
+      }
+    });
+  }, []);
+
   const Signin = (e) => {
     e.preventDefault();
     const email = document.getElementById("email").value.trim();
@@ -17,7 +25,7 @@ const Login = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((response) => {
+      .then(() => {
         SetSignin(true);
       })
       .catch((error) => {
@@ -48,9 +56,12 @@ const Login = () => {
   return (
     <section className="login-section center-align">
       <div className="bg blue"></div>
-      <div className="content-login section">
+      <div
+        className="content-login section"
+        style={{ margin: "0", padding: "0" }}
+      >
         <img src={logo} alt="logo" width="100" />
-        <h1 className="white-text">Lavoro App</h1>
+        <h2 className="blue-text text-accent-4">Lavoro App</h2>
         <div className="row container">
           <form className="col s12 m8 offset-m2 white container form-login">
             <h4 className="blue-text">Inicia sesión</h4>
