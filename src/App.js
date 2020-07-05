@@ -34,7 +34,7 @@ const App = () => {
           <Hire />
         </Route>
 
-        <Route exact path="/hirings/:uid?">
+        <Route exact path="/hirings/:uid">
           <Hirings />
         </Route>
 
