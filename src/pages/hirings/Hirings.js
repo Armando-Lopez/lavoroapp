@@ -6,7 +6,8 @@ import M from "materialize-css";
 
 const Hirings = () => {
   const { uid } = useParams();
-  const [hiringRequests, setReq] = useState([]);
+  const [seenHiringRequests, setSeen] = useState([]);
+  const [unSeenHiringRequests, setUnsee] = useState([]);
 
   useEffect(() => {
     db.collection("hirings")
@@ -14,56 +15,89 @@ const Hirings = () => {
       .onSnapshot((snap) => {
         let req = [];
         snap.forEach((doc) => {
-          let d = { did: doc.id, data: doc.data() };
+          let d = { id: doc.id, data: doc.data() };
           req.push(d);
         });
-        setReq(req);
+        setSeen(req.filter((r) => r.data.seen));
+        setUnsee(req.filter((r) => !r.data.seen));
       });
 
     const collapsibleList = document.querySelector(".collapsible");
-    // console.log(collapsible);
-
     M.Collapsible.init(collapsibleList, {
       accordion: false,
+      onCloseEnd() {
+        db.collection("hirings")
+          .doc(window.localStorage.getItem("requestSeen"))
+          .update({
+            seen: true,
+          });
+      },
     });
   }, []);
 
-  const deleteRequest = (did) => {
-    db.collection("hirings")
-      .doc(did)
-      .delete()
-      .then(() => {
-        M.toast({ html: "Solicitud Eliminada" });
-      })
-      .catch((error) => {
-        console.log(error);
-        M.toast({ html: "Oop! intentalo más tarde" });
-      });
+  const markAsSeen = (id) => {
+    window.localStorage.setItem("requestSeen", id);
   };
+
+  const deleteRequest = (did) => {
+    if (window.confirm("¿seguro que desea eliminar está solicitud?")) {
+      db.collection("hirings")
+        .doc(did)
+        .delete()
+        .then(() => {
+          M.toast({ html: "Solicitud Eliminada" });
+        })
+        .catch((error) => {
+          console.log(error);
+          M.toast({ html: "Oop! intentalo más tarde" });
+        });
+    }
+  };
+
   return (
     <>
       <Navbar />
       <div className="container section">
-        <ul className="collapsible expandable popout blue-grey-text text-darken-4">
-          {hiringRequests.length > 0 &&
-            hiringRequests.map((request, index) => {
+        <ul className="collapsible expandable popout blue-grey-text text-darken-3">
+          {/* Muestra las solitudes no vistas primero */}
+          {unSeenHiringRequests.length > 0 &&
+            unSeenHiringRequests.map((request, index) => {
               return (
-                <RequestsList
+                <RequetsList
                   key={index}
                   request={request}
+                  markAsSeen={markAsSeen}
                   onDelete={deleteRequest}
                 />
               );
             })}
+
+          {/* Muestra las solitudes vistas */}
+          {seenHiringRequests.length > 0 &&
+            seenHiringRequests.map((request, index) => {
+              return (
+                <RequetsList
+                  key={index}
+                  request={request}
+                  markAsSeen={markAsSeen}
+                  onDelete={deleteRequest}
+                />
+              );
+            })}
+          {seenHiringRequests.length === 0 &&
+            unSeenHiringRequests.length === 0 && (
+              <h4 className="center-align">
+                Tus solicitudes de contratación aparecerán aquí.
+              </h4>
+            )}
         </ul>
       </div>
     </>
   );
 };
 
-const RequestsList = ({ request, onDelete }) => {
-  // console.log(request);
-
+const RequetsList = ({ request, markAsSeen, onDelete }) => {
+  const { seen } = request.data;
   const {
     first_name,
     last_name,
@@ -71,32 +105,20 @@ const RequestsList = ({ request, onDelete }) => {
     telephone,
     description,
   } = request.data.body;
-
   return (
-    // <div className="col s12 m6 l4">
-    //   <div className="card blue-grey">
-    //     <div className="card-content white-text">
-    //       <span className="card-title">{request.title}</span>
-    //       <p>{description}</p>
-    //     </div>
-    //     <div className="card-action">
-    //       <button
-    //         className="btn-floating right"
-    //         onClick={() => {
-    //           onDelete(request.did);
-    //         }}
-    //       >
-    //         <i className="material-icons">delete</i>
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
     <li>
       <div
-        className="collapsible-header blue accent-1"
+        className={`collapsible-header blue ${
+          seen ? "lighten-5" : "lighten-4"
+        }`}
         style={{ fontWeight: "700" }}
+        onClick={() => {
+          markAsSeen(request.id);
+        }}
       >
-        <i className="material-icons">description</i>
+        <i className="material-icons">
+          {seen ? "visibility" : "visibility_off"}
+        </i>
         {`${first_name} | ${email}`}
       </div>
 
@@ -111,18 +133,18 @@ const RequestsList = ({ request, onDelete }) => {
 
           <li className="collection-item">
             <i className="material-icons">email </i>
-            {telephone}
+            {email}
           </li>
 
           <li className="collection-item">
             <i className="material-icons">phone </i>
-            {email}
+            {telephone}
           </li>
 
           <button
             className="btn-floating red right"
             onClick={() => {
-              onDelete(request.did);
+              onDelete(request.id);
             }}
           >
             <i className="material-icons">delete</i>
