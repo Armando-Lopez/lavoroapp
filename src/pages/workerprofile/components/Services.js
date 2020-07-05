@@ -4,7 +4,7 @@ import db from "../../../services/firebase/dbconfig";
 import M from "materialize-css";
 import Loader from "../../../components/loader/Loader";
 
-const Services = ({ uid, photos_services, isOwner }) => {
+const Services = ({ uid, photos_services, first_name, isOwner }) => {
   return (
     <>
       {isOwner && (
@@ -19,20 +19,45 @@ const Services = ({ uid, photos_services, isOwner }) => {
         </>
       )}
 
-      <ServicesPhotos photos_services={photos_services} isOwner={isOwner} />
+      <ServicesPhotos
+        uid={uid}
+        photos_services={photos_services}
+        isOwner={isOwner}
+        first_name={first_name}
+      />
     </>
   );
 };
 
-const ServicesPhotos = ({ photos_services, isOwner }) => {
+const ServicesPhotos = ({ uid, photos_services, first_name, isOwner }) => {
   const message = isOwner
     ? "No has subido ninguna foto. Presiona el botón de agregar y muestranos lo que haces."
-    : "Este usuario no ha subido fotos de sus servicios";
+    : `${first_name} no ha subido fotos de sus servicios`;
 
   useEffect(() => {
     const elem = document.querySelectorAll(".materialboxed");
     M.Materialbox.init(elem);
   }, []);
+
+  const deletePhotoService = (url) => {
+    const fileRef = firebase.storage().refFromURL(url);
+
+    fileRef
+      .delete()
+      .then(() => {
+        db.collection("workers")
+          .doc(uid)
+          .update({
+            photos_services: firebase.firestore.FieldValue.arrayRemove(url),
+          })
+          .then(() => {
+            M.toast({ html: "Photo eliminada correctamente" });
+          });
+      })
+      .catch(() => {
+        M.toast({ html: "No pudimos eliminar la foto. intentalo más tarde." });
+      });
+  };
 
   return (
     <>
@@ -42,12 +67,20 @@ const ServicesPhotos = ({ photos_services, isOwner }) => {
       <div className="services-cnt">
         {photos_services.map((item, index) => {
           return (
-            <div className="card center-align z-depth-2 service" key={index}>
+            <div key={index} className="card center-align z-depth-2 service">
               <img
                 src={item}
-                className="responsive-img center materialboxed"
+                className="responsive-img center materialboxe"
                 alt="servicio"
               />
+              {isOwner && (
+                <button
+                  className="btn-floating red"
+                  onClick={() => deletePhotoService(item)}
+                >
+                  <i className="material-icons">delete</i>
+                </button>
+              )}
             </div>
           );
         })}
@@ -77,7 +110,7 @@ const ModalUploadPhotoService = ({ uid }) => {
       try {
         setLoading(true);
         const storageRef = firebase.storage().ref();
-        const fileRef = storageRef.child(file.name);
+        const fileRef = storageRef.child(uid + "/" + file.name);
         await fileRef.put(file);
         const fileUrl = await fileRef.getDownloadURL();
 
@@ -92,7 +125,7 @@ const ModalUploadPhotoService = ({ uid }) => {
             .then(() => {
               M.toast({ html: "Foto añadida con exito!" });
               setLoading(false);
-              window.location.reload();
+              cancel();
             });
         }
       } catch (error) {
@@ -118,7 +151,7 @@ const ModalUploadPhotoService = ({ uid }) => {
 
           <p>Añade una foto de tus servicios</p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} id="form-upload-photo-service">
             <div className="file-field input-field">
               <div className="btn blue accent-3">
                 <i className="material-icons">upload_file</i>
