@@ -23,7 +23,7 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
       try {
         setLoading(true);
         const storageRef = firebase.storage().ref();
-        const fileRef = storageRef.child(file.name);
+        const fileRef = storageRef.child(uid + "/" + file.name);
         await fileRef.put(file);
 
         //guarda la direccio del url de la foto
@@ -35,12 +35,21 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
           M.toast({ html: "Foto actualizada" });
           setLoading(false);
           cancel();
+          deletePreviousPhoto();
         }
       } catch (error) {
         console.log(error);
         M.toast({ html: "Ha ocurrido un error al actualizar la foto" });
         setLoading(false);
       }
+    }
+  };
+
+  const deletePreviousPhoto = () => {
+    if (photo) {
+      const fileRef = firebase.storage().refFromURL(photo);
+      fileRef.delete();
+      console.log(fileRef);
     }
   };
 
