@@ -40,23 +40,27 @@ const ServicesPhotos = ({ uid, photos_services, first_name, isOwner }) => {
   }, []);
 
   const deletePhotoService = (url) => {
-    const fileRef = firebase.storage().refFromURL(url);
+    if (window.confirm("¿Desea eliminar esta foto?")) {
+      const fileRef = firebase.storage().refFromURL(url);
 
-    fileRef
-      .delete()
-      .then(() => {
-        db.collection("workers")
-          .doc(uid)
-          .update({
-            photos_services: firebase.firestore.FieldValue.arrayRemove(url),
-          })
-          .then(() => {
-            M.toast({ html: "Photo eliminada correctamente" });
+      fileRef
+        .delete()
+        .then(() => {
+          db.collection("workers")
+            .doc(uid)
+            .update({
+              photos_services: firebase.firestore.FieldValue.arrayRemove(url),
+            })
+            .then(() => {
+              M.toast({ html: "Photo eliminada correctamente" });
+            });
+        })
+        .catch(() => {
+          M.toast({
+            html: "No pudimos eliminar la foto. intentalo más tarde.",
           });
-      })
-      .catch(() => {
-        M.toast({ html: "No pudimos eliminar la foto. intentalo más tarde." });
-      });
+        });
+    }
   };
 
   return (
