@@ -74,7 +74,7 @@ const ServicesPhotos = ({ uid, photos_services, first_name, isOwner }) => {
             <div key={index} className="card center-align z-depth-2 service">
               <img
                 src={item}
-                className="responsive-img center materialboxe"
+                className="responsive-img center materialboxed"
                 alt="servicio"
               />
               {isOwner && (
