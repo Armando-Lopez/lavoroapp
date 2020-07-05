@@ -88,6 +88,7 @@ const WorkerProfile = () => {
                 <Services
                   uid={uid}
                   photos_services={worker.photos_services}
+                  first_name={worker.first_name}
                   isOwner={IsOwner}
                 />
               </div>

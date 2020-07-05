@@ -4,9 +4,17 @@
   justify-content: center;
 }
 .services-cnt .service {
+  position: relative;
   margin: 5px;
   width: 100%;
   width: fit-content;
   height: fit-content;
   max-width: 350px;
+  max-height: 300px;
+  overflow: hidden;
+}
+.services-cnt .service button {
+  position: absolute;
+  top: 0;
+  left: 83%;
 }

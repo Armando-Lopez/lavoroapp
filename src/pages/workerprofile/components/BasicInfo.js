@@ -35,7 +35,10 @@ const BasicInfo = ({ uid, worker, IsOwner }) => {
           ))}
         </p>
 
-        <p className="flow-text blue-grey-text text-darken-3">
+        <p
+          className="flow-text blue-grey-text text-darken-3"
+          style={{ textAlign: "justify" }}
+        >
           {worker.description ? worker.description : "Sin descripción"}
         </p>
       </div>
