@@ -95,7 +95,7 @@ const Sidenav = () => {
         <div className="divider"></div>
 
         <li className="hide">
-          <a href="mobile.html">
+          <a href="#!">
             <i className="material-icons">bug_report</i>
             Reportar un problema
           </a>

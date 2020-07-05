@@ -2,6 +2,8 @@ import React from "react";
 import logo from "../../logo.png";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import firebase from "firebase";
+
 import db from "../../services/firebase/dbconfig";
 import M from "materialize-css";
 import Navbar from "../../components/navbar/Navbar";
@@ -17,6 +19,7 @@ const Hire = () => {
         seen: false,
         title: `Solicitud de ${data.first_name + " " + data.last_name}`,
         body: data,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then((res) => {
         M.toast({

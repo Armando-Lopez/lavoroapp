@@ -1,12 +1,15 @@
 .login-section {
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 .login-section .bg {
   position: absolute;
   height: 50%;
   width: 100%;
+  top: 50%;
 }
 
 .login-section .content-login {
