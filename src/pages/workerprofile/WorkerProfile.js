@@ -10,6 +10,7 @@ import ProfilePhoto from "./components/ProfilePhoto";
 import BasicInfo from "./components/BasicInfo";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
+import Rating from "./components/Ratings";
 import PageNotFound from "../notfound/PageNotFound";
 
 //css
@@ -91,6 +92,9 @@ const WorkerProfile = () => {
                   first_name={worker.first_name}
                   isOwner={IsOwner}
                 />
+              </div>
+              <div className="col s12">
+                <Rating />
               </div>
             </div>
           </div>
