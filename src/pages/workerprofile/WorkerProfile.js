@@ -22,7 +22,7 @@ const WorkerProfile = () => {
   const [worker, setWorker] = useState(undefined);
   const [loaded, setLoaded] = useState(false);
   const [found, setFound] = useState(true);
-  const [IsOwner, setOwner] = useState(false);
+  const [isOwner, setOwner] = useState(false);
 
   useEffect(() => {
     const workerRef = db.collection("workers").doc(uid);
@@ -77,12 +77,12 @@ const WorkerProfile = () => {
                 <ProfilePhoto
                   uid={uid}
                   photo={worker.photo}
-                  IsOwner={IsOwner}
+                  isOwner={isOwner}
                 />
               </div>
 
               <div className="col s12 l7 basic-info">
-                <BasicInfo uid={uid} worker={worker} IsOwner={IsOwner} />
+                <BasicInfo uid={uid} worker={worker} isOwner={isOwner} />
               </div>
 
               <div className="col s12">
@@ -90,17 +90,22 @@ const WorkerProfile = () => {
                   uid={uid}
                   photos_services={worker.photos_services}
                   first_name={worker.first_name}
-                  isOwner={IsOwner}
+                  isOwner={isOwner}
                 />
               </div>
+
               <div className="col s12">
-                <Rating />
+                <Rating
+                  uid={uid}
+                  isOwner={isOwner}
+                  first_name={worker.first_name}
+                />
               </div>
             </div>
           </div>
         </div>
 
-        {!IsOwner && <Contact uid={uid} />}
+        {!isOwner && <Contact uid={uid} />}
       </section>
     );
   } else if (!worker && found) {
