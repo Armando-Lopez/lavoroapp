@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import firebase from "firebase";
 import db from "../../services/firebase/dbconfig";
 import Navbar from "../../components/navbar/Navbar";
 import M from "materialize-css";
@@ -8,30 +9,38 @@ const Hirings = () => {
   const { uid } = useParams();
   const [seenHiringRequests, setSeen] = useState([]);
   const [unSeenHiringRequests, setUnsee] = useState([]);
+  const [isOwner, setOwner] = useState(false);
 
   useEffect(() => {
-    db.collection("hirings")
-      .where("to", "==", uid)
-      .onSnapshot((snap) => {
-        let req = [];
-        snap.forEach((doc) => {
-          let d = { id: doc.id, data: doc.data() };
-          req.push(d);
-        });
-        setSeen(req.filter((r) => r.data.seen));
-        setUnsee(req.filter((r) => !r.data.seen));
-      });
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (user.uid === uid) {
+          setOwner(true);
+          db.collection("hirings")
+            .where("to", "==", uid)
+            .onSnapshot((snap) => {
+              let req = [];
+              snap.forEach((doc) => {
+                let d = { id: doc.id, data: doc.data() };
+                req.push(d);
+              });
+              setSeen(req.filter((r) => r.data.seen));
+              setUnsee(req.filter((r) => !r.data.seen));
+            });
 
-    const collapsibleList = document.querySelector(".collapsible");
-    M.Collapsible.init(collapsibleList, {
-      accordion: false,
-      onCloseEnd() {
-        db.collection("hirings")
-          .doc(window.localStorage.getItem("requestSeen"))
-          .update({
-            seen: true,
+          const collapsibleList = document.querySelector(".collapsible");
+          M.Collapsible.init(collapsibleList, {
+            accordion: false,
+            onCloseEnd() {
+              db.collection("hirings")
+                .doc(window.localStorage.getItem("requestSeen"))
+                .update({
+                  seen: true,
+                });
+            },
           });
-      },
+        }
+      }
     });
   }, []);
 
@@ -57,41 +66,43 @@ const Hirings = () => {
   return (
     <>
       <Navbar />
-      <div className="container section">
-        <ul className="collapsible expandable popout blue-grey-text text-darken-3">
-          {/* Muestra las solitudes no vistas primero */}
-          {unSeenHiringRequests.length > 0 &&
-            unSeenHiringRequests.map((request, index) => {
-              return (
-                <RequetsList
-                  key={index}
-                  request={request}
-                  markAsSeen={markAsSeen}
-                  onDelete={deleteRequest}
-                />
-              );
-            })}
+      {isOwner && (
+        <div className="container section">
+          <ul className="collapsible expandable popout blue-grey-text text-darken-3">
+            {/* Muestra las solitudes no vistas primero */}
+            {unSeenHiringRequests.length > 0 &&
+              unSeenHiringRequests.map((request, index) => {
+                return (
+                  <RequetsList
+                    key={index}
+                    request={request}
+                    markAsSeen={markAsSeen}
+                    onDelete={deleteRequest}
+                  />
+                );
+              })}
 
-          {/* Muestra las solitudes vistas */}
-          {seenHiringRequests.length > 0 &&
-            seenHiringRequests.map((request, index) => {
-              return (
-                <RequetsList
-                  key={index}
-                  request={request}
-                  markAsSeen={markAsSeen}
-                  onDelete={deleteRequest}
-                />
-              );
-            })}
-          {seenHiringRequests.length === 0 &&
-            unSeenHiringRequests.length === 0 && (
-              <h4 className="center-align">
-                Tus solicitudes de contratación aparecerán aquí.
-              </h4>
-            )}
-        </ul>
-      </div>
+            {/* Muestra las solitudes vistas */}
+            {seenHiringRequests.length > 0 &&
+              seenHiringRequests.map((request, index) => {
+                return (
+                  <RequetsList
+                    key={index}
+                    request={request}
+                    markAsSeen={markAsSeen}
+                    onDelete={deleteRequest}
+                  />
+                );
+              })}
+            {seenHiringRequests.length === 0 &&
+              unSeenHiringRequests.length === 0 && (
+                <h4 className="center-align">
+                  Tus solicitudes de contratación aparecerán aquí.
+                </h4>
+              )}
+          </ul>
+        </div>
+      )}
     </>
   );
 };

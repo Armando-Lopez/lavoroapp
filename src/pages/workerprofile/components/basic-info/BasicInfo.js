@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import db from "../../../services/firebase/dbconfig";
+import db from "../../../../services/firebase/dbconfig";
 import M from "materialize-css";
-import Loader from "../../../components/loader/Loader";
+import Loader from "../../../../components/loader/Loader";
 
-const BasicInfo = ({ uid, worker, IsOwner }) => {
+const BasicInfo = ({ uid, worker, isOwner }) => {
   //
 
   return (
     <>
       <div>
-        {IsOwner && (
+        {isOwner && (
           <>
             <button
               data-target="modal-form-info"

@@ -7,11 +7,9 @@ import firebase from "firebase";
 import db from "../../services/firebase/dbconfig";
 import M from "materialize-css";
 import Navbar from "../../components/navbar/Navbar";
-
 const Hire = () => {
   const { uid } = useParams();
   const { register, errors, handleSubmit } = useForm();
-
   const onsubmit = (data) => {
     db.collection("hirings")
       .add({

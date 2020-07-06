@@ -65,9 +65,9 @@ const ServicesPhotos = ({ uid, photos_services, first_name, isOwner }) => {
 
   return (
     <>
-      <h4 className="center-align blue-grey-text text-darken-2">
+      <h6 className="center-align blue-grey-text text-darken-2">
         {photos_services.length > 0 ? "Servicios" : message}
-      </h4>
+      </h6>
       <div className="services-cnt">
         {photos_services.map((item, index) => {
           return (

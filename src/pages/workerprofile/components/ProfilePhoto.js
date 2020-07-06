@@ -5,7 +5,7 @@ import default_photo from "../../../photo_default.png";
 import M from "materialize-css";
 import Loader from "../../../components/loader/Loader";
 
-const ProfilePhoto = ({ uid, photo, IsOwner }) => {
+const ProfilePhoto = ({ uid, photo, isOwner }) => {
   //
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -69,7 +69,7 @@ const ProfilePhoto = ({ uid, photo, IsOwner }) => {
           width="200"
           style={{ border: "0px solid blue" }}
         />
-        {IsOwner && (
+        {isOwner && (
           <>
             <button
               data-target="modal-change-photo"
