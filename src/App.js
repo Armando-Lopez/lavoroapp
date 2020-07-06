@@ -6,7 +6,7 @@ import Home from "./pages/home/Home";
 import Signup from "./pages/signup/Signup";
 import Login from "./pages/login/Login";
 import WorkerProfile from "./pages/workerprofile/WorkerProfile";
-import Hire from "./pages/hire/Hire";
+import Hire from "./pages/hire/hire";
 import Hirings from "./pages/hirings/Hirings";
 import PageNotFound from "./pages/notfound/PageNotFound";
 
