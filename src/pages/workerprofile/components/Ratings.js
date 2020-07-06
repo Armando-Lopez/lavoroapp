@@ -7,7 +7,7 @@ import M from "materialize-css";
 import StarRating from "./evaluation-servis/StartRating";
 import RatingForm from "./evaluation-servis/RatingForm";
 
-const Rating = ({ uid, isOwner, first_name }) => {
+const Rating = ({ uid, first_name }) => {
   const [stars, setStar] = useState(null);
   const [isOpen, setOpen] = useState(false);
 
@@ -27,15 +27,10 @@ const Rating = ({ uid, isOwner, first_name }) => {
   });
 
   const onStarRating = (ratingValue) => {
-    console.log(ratingValue);
-
     setStar(ratingValue);
   };
 
   const onComment = (data) => {
-    console.log(data);
-    console.log(stars);
-
     if (stars && data) {
       if (data.comment.trim() !== "") {
         db.collection("ratings")
@@ -43,6 +38,7 @@ const Rating = ({ uid, isOwner, first_name }) => {
             to: uid,
             stars: stars,
             comment: data,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
           })
           .then(() => {
             M.toast({ html: "Comentario agregado." });

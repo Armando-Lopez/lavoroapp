@@ -7,10 +7,11 @@ import Loader from "../../components/loader/Loader";
 //components
 import Navbar from "../../components/navbar/Navbar";
 import ProfilePhoto from "./components/ProfilePhoto";
-import BasicInfo from "./components/BasicInfo";
+import BasicInfo from "./components/basic-info/BasicInfo";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
 import Rating from "./components/Ratings";
+import ShowRatings from "./components/evaluation-servis/ShowRatings";
 import PageNotFound from "../notfound/PageNotFound";
 
 //css
@@ -23,6 +24,7 @@ const WorkerProfile = () => {
   const [loaded, setLoaded] = useState(false);
   const [found, setFound] = useState(true);
   const [isOwner, setOwner] = useState(false);
+  const [tab, setTab] = useState("services");
 
   useEffect(() => {
     const workerRef = db.collection("workers").doc(uid);
@@ -85,21 +87,60 @@ const WorkerProfile = () => {
                 <BasicInfo uid={uid} worker={worker} isOwner={isOwner} />
               </div>
 
-              <div className="col s12">
-                <Services
-                  uid={uid}
-                  photos_services={worker.photos_services}
-                  first_name={worker.first_name}
-                  isOwner={isOwner}
-                />
+              <div
+                className="col s12 m10 offset-m1 section"
+                style={{ marginTop: "2em" }}
+              >
+                <ul id="tabs-swipe-demo" className="tabs">
+                  <li
+                    className={`tab col s6 blue blue-grey-text  ${
+                      tab === "services" ? "lighten-3" : "lighten-5"
+                    } `}
+                  >
+                    <a
+                      className="blue-grey-text text-darken-3"
+                      href="#!"
+                      onClick={() => {
+                        setTab("services");
+                      }}
+                    >
+                      Servicios
+                    </a>
+                  </li>
+                  <li
+                    className={`tab col s6 blue blue-grey-text  ${
+                      tab === "ratings" ? "lighten-3" : "lighten-5"
+                    } `}
+                  >
+                    <a
+                      className="blue-grey-text text-darken-3"
+                      href="#!"
+                      onClick={() => {
+                        setTab("ratings");
+                      }}
+                    >
+                      Calificaciones
+                    </a>
+                  </li>
+                </ul>
               </div>
 
               <div className="col s12">
-                <Rating
-                  uid={uid}
-                  isOwner={isOwner}
-                  first_name={worker.first_name}
-                />
+                {tab === "services" ? (
+                  <Services
+                    uid={uid}
+                    photos_services={worker.photos_services}
+                    first_name={worker.first_name}
+                    isOwner={isOwner}
+                  />
+                ) : (
+                  <>
+                    {!isOwner && (
+                      <Rating uid={uid} first_name={worker.first_name} />
+                    )}
+                    <ShowRatings uid={uid} />
+                  </>
+                )}
               </div>
             </div>
           </div>
