@@ -11,15 +11,15 @@ const WorkerCard = ({ id, first_name, last_name, photo, services }) => {
           alt={first_name}
           className="circle"
         />
-        <span className="title blue-grey-text text-accent-4">
+        <span className="title blue-grey-text text-accent-4 text-darken-2">
           {first_name + " " + last_name}
         </span>
-        <p>
+        <p className="grey-text text-accent-4 text-darken-1">
           {services.map((service, index) => {
             return (
-              <span className="grey-text text-accent-4" key={index}>
-                {service + ". "}
-              </span>
+              // <span className="grey-text text-accent-4" key={index}>
+              service + " | "
+              // </span>
             );
           })}
         </p>
