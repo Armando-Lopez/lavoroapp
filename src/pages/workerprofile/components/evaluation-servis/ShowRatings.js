@@ -7,7 +7,6 @@ import "./show_ratings.css";
 const ShowRatings = ({ uid }) => {
   const [stars, setStars] = useState(0);
   const [comments, setComments] = useState([]);
-  const [rating, setRating] = useState(null);
 
   useEffect(() => {
     db.collection("ratings")
