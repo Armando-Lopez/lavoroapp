@@ -38,11 +38,11 @@ const Hire = () => {
             });
     };
     return (
-        <section className="blue accent-1 lighten-1">
+        <section className="blue accent-1 lighten-1 grey-text text-darken-2">
             <Navbar />
             <div className="container section center-align white">
                 <img src={logo} alt="logo" />
-                <h5 className="black-text center-align">
+                <h5 className="center-align">
                     Diligencia este formulario y pronto me pondré en contacto.
                 </h5>
                 <div className="row">
