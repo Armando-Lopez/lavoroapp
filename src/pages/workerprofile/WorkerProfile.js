@@ -54,7 +54,7 @@ const WorkerProfile = () => {
                 }
             }
         });
-    }, []);
+    }, [uid]);
 
     if (worker && loaded && found) {
         return (

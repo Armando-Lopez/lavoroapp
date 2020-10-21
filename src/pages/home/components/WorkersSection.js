@@ -37,7 +37,7 @@ const WorkersSection = () => {
         if (value !== "") {
             let found = [];
             workers.forEach((worker) => {
-                worker.services.find((item) => {
+                worker.services.forEach((item) => {
                     let service = item.toLowerCase().trim();
                     let wasFound = service.includes(value);
                     if (wasFound && !found.includes(worker)) {

@@ -53,6 +53,7 @@ const Sidenav = () => {
                                             ? user.photo
                                             : photo_default
                                     }
+                                    alt="mini"
                                 />
                                 <span className="white-text name">
                                     {user && user.first_name}
@@ -89,7 +90,7 @@ const Sidenav = () => {
                         </li>
 
                         <li>
-                            <a onClick={closeSession}>
+                            <a onClick={closeSession} href="#!">
                                 <i className="material-icons">
                                     power_settings_new
                                 </i>

@@ -112,7 +112,7 @@ const ModalChangePhoto = ({
                     <img
                         src={photoPreview}
                         className="responsive-img circle"
-                        alt="profile-photo"
+                        alt="profile-phto"
                     />
                     <form
                         className="form-photo"
